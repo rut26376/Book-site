@@ -1,0 +1,27 @@
+<div class="menu-container">
+  <!-- Header -->
+  <header class="menu-header">
+    <div class="header-left">
+      <div class="logo">📚 מספר ספרים</div>
+      <div class="basket">🛒</div>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="חיפוש...">
+    </div>
+    <div class="header-right">
+      <img src="../../../public/logo.png" alt="Logo" class="logo-image">
+    </div>
+  </header>
+
+  <!-- Categories Navigation -->
+  <nav class="categories">
+    <button class="category-btn" *ngFor="let category of categories">
+      {{ category }}
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="content">
+    <p>בחר קטגוריה כדי להציג ספרים</p>
+  </main>
+</div>
