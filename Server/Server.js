@@ -1,11 +1,24 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+const myexpress = require("express")
+const db  = require("./dal/db-accessor")
+const bookRouter = require("./routes/book-router")
+const app = myexpress()
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use(myexpress.urlencoded({extends:true}))
+app.use(myexpress.json())
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+//חיבור ל DB
+const init = async()=>{
+    await db.connect()
+}
+
+init()
+
+const hostname="localhost"
+const port = 5000
+app.listen(port, hostname, ()=>{
+    console.log(`Server running at ${hostname}:${port}`);
+})
+
+app.use("/books", bookRouter)
+
+
