@@ -3,7 +3,9 @@
   <header class="menu-header">
     <div class="header-left">
       <div class="logo">📚 מספר ספרים</div>
-      <div class="basket">🛒</div>
+      <div class="basket">
+        <img src="/assets/general/cart.png" alt="Basket" class="basket">
+      </div>
     </div>
     <div class="search-box">
       <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery" (ngModelChange)="search(searchQuery)">
@@ -13,37 +15,27 @@
     </div>
   </header>
 
-  <!-- Categories Navigation -->
-  <nav class="categories">
-    <button class="category-btn" *ngFor="let category of categories">
-      <span class="category-icon">{{ category.icon }}</span>
-      <span class="category-name">{{ category.main }}</span>
-    </button>
-  </nav>
-
-  <!-- Main Content -->
-  <main class="content">
-    <!-- תוצאות חיפוש -->
-    <div class="books-grid" *ngIf="searchBooks.length > 0">
-      <div class="book-card" *ngFor="let book of searchBooks">
-        <div class="book-image">
-          <img [src]="book.picture" [alt]="book.bookName" />
+  <!-- תיבת חיפוש עם Dropdown של תוצאות -->
+  <div class="search-results-dropdown" *ngIf="searchBooks.length > 0">
+    <div class="search-results-list">
+      <div class="search-result-item" *ngFor="let book of searchBooks">
+        <div class="result-image">
+          <img src="/assets/book-img/{{ book.picture }}" alt="{{ book.bookName }}" />
         </div>
-        <div class="book-info">
-          <h3 class="book-name">{{ book.bookName }}</h3>
-          <p class="book-author">{{ book.author }}</p>
-          <p class="book-description">{{ book.description }}</p>
-          <div class="book-footer">
-            <span class="book-price">₪ {{ book.price }}</span>
-            <button class="add-to-cart-btn">הוסף לסל</button>
-          </div>
+        <div class="result-info">
+          <h4 class="result-name">{{ book.bookName }}</h4>
+          <p class="result-author">{{ book.author }}</p>
+          <span class="result-price">₪ {{ book.price }}</span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- הודעה כשאין תוצאות -->
-    <div class="no-results" *ngIf="searchBooks.length === 0">
-      <p>בחר קטגוריה או חפש ספר כדי להציג תוצאות</p>
-    </div>
-  </main>
+  <!-- Categories Navigation -->
+  <nav class="categories">
+    <button class="category-btn" *ngFor="let category of categories">
+      <img [src]="category.icon" [alt]="category.main" class="category-icon" />
+      <span class="category-name">{{ category.main }}</span>
+    </button>
+  </nav>
 </div>

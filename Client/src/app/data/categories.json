@@ -2,7 +2,7 @@
     "categories": [
         {
             "main": "מועדים",
-            "icon": "🕯️",
+            "icon": "/assets/category-ico/torah.png",
             "sub": [
                 "חגי תשרי",
                 "חנוכה",
@@ -15,7 +15,7 @@
         },
         {
             "main": "קודש בסיסי",
-            "icon": "📖",
+            "icon": "/assets/category-ico/torah.png",
             "sub": [
                 "תורה",
                 "נביאים וכתובים",
@@ -31,7 +31,7 @@
         },
         {
             "main": "קודש כללי",
-            "icon": "✡️",
+            "icon": "/assets/category-ico/torah.png",
             "sub": [
                 "קבלה",
                 "חסידות",
@@ -41,7 +41,7 @@
         },
         {
             "main": "הלכה",
-            "icon": "⚖️",
+            "icon": "/assets/category-ico/book.png",
             "sub": [
                 "שותים",
                 "ספרי הלכה",
@@ -64,7 +64,7 @@
         },
         {
             "main": "שונות",
-            "icon": "📚",
+            "icon": "/assets/category-ico/book.png",
             "sub": [
                 "חינוך ילדים",
                 "הבית היהודי",
@@ -74,7 +74,7 @@
         },
         {
             "main": "קריאה",
-            "icon": "📖",
+            "icon": "/assets/category-ico/book.png",
             "sub": [
                 "מבוגרים",
                 "נוער",

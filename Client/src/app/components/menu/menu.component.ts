@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
@@ -31,11 +31,29 @@ export class MenuComponent implements OnInit {
       book.author.toLowerCase().includes(lowerQuery)
     );
     console.log('תוצאות חיפוש:', this.searchBooks);
+  }
+
+  closeDropdown() {
+    this.searchBooks = [];
+    this.searchQuery = '';
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const searchBox = document.querySelector('.search-box');
+    const dropdown = document.querySelector('.search-results-dropdown');
+    
+    if (searchBox && !searchBox.contains(target) && 
+        dropdown && !dropdown.contains(target)) {
+      this.closeDropdown();
     }
+  }
 
   ngOnInit() {
     // טעינת הקטגוריות מה-JSON
     this.categories = categoriesData.categories;
+    "../data/books-img/בובה.png"
     console.log('קטגוריות:', this.categories);
 
     // טעינת הספרים
