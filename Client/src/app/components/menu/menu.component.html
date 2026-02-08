@@ -6,7 +6,7 @@
       <div class="basket">🛒</div>
     </div>
     <div class="search-box">
-      <input type="text" placeholder="חיפוש...">
+      <input type="text" placeholder="חיפוש..." class="search-input" (input)="search($event.target.value)">
     </div>
     <div class="header-right">
       <img src="../../../public/logo.png" alt="Logo" class="logo-image">
@@ -16,12 +16,34 @@
   <!-- Categories Navigation -->
   <nav class="categories">
     <button class="category-btn" *ngFor="let category of categories">
-      {{ category }}
+      <span class="category-icon">{{ category.icon }}</span>
+      <span class="category-name">{{ category.main }}</span>
     </button>
   </nav>
 
   <!-- Main Content -->
   <main class="content">
-    <p>בחר קטגוריה כדי להציג ספרים</p>
+    <!-- תוצאות חיפוש -->
+    <div class="books-grid" *ngIf="searchBooks.length > 0">
+      <div class="book-card" *ngFor="let book of searchBooks">
+        <div class="book-image">
+          <img [src]="book.picture" [alt]="book.bookName" />
+        </div>
+        <div class="book-info">
+          <h3 class="book-name">{{ book.bookName }}</h3>
+          <p class="book-author">{{ book.author }}</p>
+          <p class="book-description">{{ book.description }}</p>
+          <div class="book-footer">
+            <span class="book-price">₪ {{ book.price }}</span>
+            <button class="add-to-cart-btn">הוסף לסל</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- הודעה כשאין תוצאות -->
+    <div class="no-results" *ngIf="searchBooks.length === 0">
+      <p>בחר קטגוריה או חפש ספר כדי להציג תוצאות</p>
+    </div>
   </main>
 </div>
