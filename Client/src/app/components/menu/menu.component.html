@@ -6,7 +6,7 @@
       <div class="basket">🛒</div>
     </div>
     <div class="search-box">
-      <input type="text" placeholder="חיפוש..." class="search-input" (input)="search($event.target.value)">
+      <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery" (ngModelChange)="search(searchQuery)">
     </div>
     <div class="header-right">
       <img src="../../../public/logo.png" alt="Logo" class="logo-image">

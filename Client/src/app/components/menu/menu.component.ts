@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
 import categoriesData from '../../data/categories.json';
 import { Book } from '../../models/book.model';
@@ -7,7 +8,7 @@ import { Book } from '../../models/book.model';
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
@@ -15,6 +16,7 @@ export class MenuComponent implements OnInit {
   categories: any[] = [];
   bookService = inject(BooksService);
   searchBooks: Book[] = [];
+  searchQuery: string = '';
 
   search(query: string) {
     if (!query || query.trim() === '') {
