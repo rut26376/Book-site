@@ -10,8 +10,11 @@ const bookScheme = new mymongo.Schema(
         description: String,
         price: Number,
         size: String,
-        picture: String,  // URL של התמונה
-        category: String,
+        picture: String,
+        category: {
+            main: String,    // קטגוריה ראשית
+            sub: String      // קטגוריה משנית
+        }
     }
 )
 
