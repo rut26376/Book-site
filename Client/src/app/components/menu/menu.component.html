@@ -8,7 +8,8 @@
       </div>
     </div>
     <div class="search-box">
-      <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery" (ngModelChange)="search(searchQuery)">
+      <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery"
+        (ngModelChange)="search(searchQuery)">
     </div>
     <div class="header-right">
       <img src="../../../public/logo.png" alt="Logo" class="logo-image">
@@ -18,9 +19,9 @@
   <!-- תיבת חיפוש עם Dropdown של תוצאות -->
   <div class="search-results-dropdown" *ngIf="searchBooks.length > 0">
     <div class="search-results-list">
-      <div class="search-result-item" *ngFor="let book of searchBooks">
+      <div class="search-result-item" *ngFor="let book of searchBooks" (click)="viewBook(book)">
         <div class="result-image">
-          <img src="/assets/book-img/{{ book.picture }}" alt="{{ book.bookName }}" />
+          <img src="/assets/book-img/{{ book.picture }}" [alt]="book.bookName" />
         </div>
         <div class="result-info">
           <h4 class="result-name">{{ book.bookName }}</h4>

@@ -1,0 +1,80 @@
+<div class="book-display-container" *ngIf="book">
+  <!-- כותרת עם כפתור חזרה -->
+  <div class="book-header">
+    <button class="back-btn" (click)="goBack()">← חזרה</button>
+    <h1>{{ book.bookName }}</h1>
+  </div>
+
+  <!-- תוכן ראשי -->
+  <div class="book-content">
+    <!-- עמודה שמאל - תמונה -->
+    <div class="book-image-section">
+      <div class="book-image-container" 
+           (mousemove)="onImageMouseMove($event)"
+           (mouseleave)="onImageMouseLeave($event)"
+           (click)="openLightbox()">
+        <img #bookImage 
+             [src]="'/assets/book-img/' + book.picture" 
+             [alt]="book.bookName" 
+             class="book-image" />
+        <div class="image-focus-hint">🔍 לחץ לפוקוס</div>
+      </div>
+    </div>
+
+    <!-- עמודה ימין - מידע -->
+    <div class="book-info-section">
+      <!-- שם הספר -->
+      <div class="book-title">{{ book.bookName }}</div>
+
+      <!-- סופר -->
+      <div class="book-detail">
+        <span class="label">סופר:</span>
+        <span class="value">{{ book.author }}</span>
+      </div>
+
+      <!-- קטגוריה
+      <div class="book-detail">
+        <span class="label">קטגוריה:</span>
+        <span class="value">{{ book.category.main }} - {{ book.category.sub }}</span>
+      </div> -->
+
+      <!-- מחיר -->
+      <div class="book-price-section">
+        <span class="price-label">מחיר:</span>
+        <span class="price">₪ {{ book.price }}</span>
+      </div>
+
+      <!-- תיאור -->
+      <div class="book-description-section">
+        <h3>תיאור הספר</h3>
+        <p class="description">{{ book.description }}</p>
+      </div>
+
+      <!-- גודל -->
+      <div class="book-detail">
+        <span class="label">גודל:</span>
+        <span class="value">{{ book.size }}</span>
+      </div>
+
+      <!-- כפתור הוסף לסל -->
+      <button class="add-to-cart-btn" (click)="addToCart()">הוסף לסל</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox Modal להצגת התמונה בפוקוס מלא -->
+<div class="lightbox" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+    <img [src]="'/assets/book-img/' + book!.picture" 
+         [alt]="book!.bookName" 
+         class="lightbox-image" />
+    <div class="lightbox-title">{{ book!.bookName }}</div>
+  </div>
+</div>
+
+<!-- הודעה כשאין ספר -->
+<div class="no-book" *ngIf="!book">
+  <p>הספר לא נמצא</p>
+  <button class="back-btn" (click)="goBack()">← חזרה לעמוד הבית</button>
+</div>

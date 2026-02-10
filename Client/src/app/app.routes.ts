@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { MenuComponent } from './components/menu/menu.component';
+import { DisplayBookComponent } from './components/display-book/display-book.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: MenuComponent },
+    { path: 'home', component: DisplayBookComponent },
+    { path: 'book/:id', component: DisplayBookComponent },
 ];

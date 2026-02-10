@@ -1,18 +1,16 @@
 .menu-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: auto;
   background-color: #dcc9b6;
   position: relative;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@600&display=swap');
-
 /* Header */
 .menu-header {
   background-color: #dcc9b6;
-  padding: 15px 30px;
+  padding: 8px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +26,7 @@
 
 .logo {
   color: #4a3728;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -39,8 +37,8 @@
   font-size: 24px;
   cursor: pointer;
   transition: transform 0.2s;
-  width: 60px;
-  height: 60px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
@@ -50,8 +48,8 @@
 
 .search-box {
   flex: 1;
-  margin: 0 25px;
-  max-width: 300px;
+  margin: 0 15px;
+  max-width: 250px;
 }
 
 .search-box input {
@@ -91,7 +89,7 @@
 }
 
 .logo-image {
-  height: 60px;
+  height: 40px;
   width: auto;
   object-fit: contain;
   cursor: pointer;
@@ -117,10 +115,10 @@
   background-color: #4a3728;
   color: #dcc9b6;
   border: none;
-  padding: 15px 0;
+  padding: 10px 0;
   border-radius: 0;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   transition: all 0.3s ease;
   box-shadow: none;
@@ -132,18 +130,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 5px;
 }
 
 .category-icon {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   display: block;
   object-fit: contain;
 }
 
 .category-name {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   letter-spacing: 0.8px;
@@ -196,12 +194,14 @@
   padding: 12px 20px;
   border-bottom: 1px solid #e6d5c3;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   gap: 15px;
 }
 
 .search-result-item:hover {
   background-color: #f0e3d7;
+  padding-right: 24px;
+  transform: translateX(-4px);
 }
 
 .search-result-item:last-child {

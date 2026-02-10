@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import categoriesData from '../../data/categories.json';
 import { Book } from '../../models/book.model';
@@ -15,13 +16,13 @@ import { Book } from '../../models/book.model';
 export class MenuComponent implements OnInit {
   categories: any[] = [];
   bookService = inject(BooksService);
+  router = inject(Router);
   searchBooks: Book[] = [];
   searchQuery: string = '';
 
   search(query: string) {
     if (!query || query.trim() === '') {
       this.searchBooks = [];
-      console.log('חיפוש ריק - הסתרת תוצאות');
       return;
     }
 
@@ -30,12 +31,17 @@ export class MenuComponent implements OnInit {
       book.bookName.toLowerCase().includes(lowerQuery) ||
       book.author.toLowerCase().includes(lowerQuery)
     );
-    console.log('תוצאות חיפוש:', this.searchBooks);
   }
 
   closeDropdown() {
     this.searchBooks = [];
     this.searchQuery = '';
+  }
+
+  viewBook(book: Book) {
+    // ניווט לעמוד הספר עם ה-ID
+    this.router.navigate(['/book', book.id]);
+    this.closeDropdown();
   }
 
   @HostListener('document:click', ['$event'])
@@ -53,13 +59,10 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     // טעינת הקטגוריות מה-JSON
     this.categories = categoriesData.categories;
-    "../data/books-img/בובה.png"
-    console.log('קטגוריות:', this.categories);
 
     // טעינת הספרים
     this.bookService.books$.subscribe(books => {
       this.bookService.bookLst = books;
-      console.log(this.bookService.bookLst);
     });
   }
 }
