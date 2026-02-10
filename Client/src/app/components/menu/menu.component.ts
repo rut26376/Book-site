@@ -65,4 +65,8 @@ export class MenuComponent implements OnInit {
       this.bookService.bookLst = books;
     });
   }
+
+  filterByCategory(category: string) {
+    this.router.navigate(['/category', category]);
+  }
 }

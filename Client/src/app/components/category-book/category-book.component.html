@@ -1,0 +1,33 @@
+<div class="category-container">
+  <!-- Header -->
+  <div class="category-header">
+    <button class="back-btn" (click)="goBack()">← חזור</button>
+    <h1>{{ categoryName }}</h1>
+  </div>
+
+  <!-- Books Grid -->
+  <div class="books-grid">
+    <div *ngFor="let book of books" class="book-card" (click)="viewBook(book.id)">
+      <!-- Book Image -->
+      <div class="book-image-wrapper">
+        <img 
+          [src]="'/assets/book-img/' + book.picture" 
+          [alt]="book.bookName"
+          class="book-image"
+        />
+      </div>
+
+      <!-- Book Info -->
+      <div class="book-info">
+        <h3 class="book-title">{{ book.bookName }}</h3>
+        <p class="book-author">{{ book.author }}</p>
+        <p class="book-price">₪{{ book.price }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="books.length === 0" class="no-books">
+    <p>לא נמצאו ספרים בקטגוריה זו</p>
+  </div>
+</div>

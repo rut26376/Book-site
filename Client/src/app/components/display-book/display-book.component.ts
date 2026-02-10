@@ -42,7 +42,7 @@ export class DisplayBookComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    window.history.back();
   }
 
   addToCart() {

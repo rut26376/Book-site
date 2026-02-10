@@ -32,11 +32,13 @@
         <span class="value">{{ book.author }}</span>
       </div>
 
-      <!-- קטגוריה
-      <div class="book-detail">
+      <!-- קטגוריה -->
+      <div class="book-detail" *ngIf="book.category">
+        <div *ngFor="let category of book.category">
         <span class="label">קטגוריה:</span>
-        <span class="value">{{ book.category.main }} - {{ book.category.sub }}</span>
-      </div> -->
+        <span class="value">  {{ category.main }} - {{ category.sub }}</span>
+        </div>
+      </div>
 
       <!-- מחיר -->
       <div class="book-price-section">

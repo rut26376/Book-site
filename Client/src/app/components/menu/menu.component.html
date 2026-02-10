@@ -34,7 +34,7 @@
 
   <!-- Categories Navigation -->
   <nav class="categories">
-    <button class="category-btn" *ngFor="let category of categories">
+    <button class="category-btn" *ngFor="let category of categories" (click)="filterByCategory(category.main)">
       <img [src]="category.icon" [alt]="category.main" class="category-icon" />
       <span class="category-name">{{ category.main }}</span>
     </button>
