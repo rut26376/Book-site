@@ -3,9 +3,9 @@
   <header class="menu-header">
     <div class="header-left">
       <div class="logo">📚 מספר ספרים</div>
-      <div class="basket">
-        <img src="/assets/general/cart.png" alt="Basket" class="basket">
-      </div>
+      <button class="cart-btn" (click)="goToCart()" title="סל קניות">
+        <img src="/assets/general/cart.png" alt="Basket" class="cart-icon">
+      </button>
     </div>
     <div class="search-box">
       <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery"

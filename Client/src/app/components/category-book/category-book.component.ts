@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../models/book.model';
 import { BooksService } from '../../services/books.service';
+import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,6 +16,7 @@ export class CategoryBookComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   bookService = inject(BooksService);
+  cartService = inject(CartService);
   
   categoryName: string = '';
   books: Book[] = [];
@@ -69,8 +71,10 @@ export class CategoryBookComponent {
 
   addToCart(book: Book) {
     const quantity = this.bookQuantities[book.id] || 1;
-    console.log(`הוסף לסל: ${book.bookName} - כמות: ${quantity}`);
-    // כאן תוסיפו את הלוגיקה להוספה לעגלה
+    this.cartService.addToCart(book, quantity);
+    alert(`הוסף לסל: ${book.bookName} - כמות: ${quantity}`);
+    // אפשר להוסיף גם ניווט לסל
+    // this.router.navigate(['/cart']);
   }
 
   increaseQuantity(bookId: number) {
@@ -90,4 +94,7 @@ export class CategoryBookComponent {
     return this.bookQuantities[bookId] || 1;
   }
 
+  goBack() {
+    this.router.navigate(['/']);
+  }
 }

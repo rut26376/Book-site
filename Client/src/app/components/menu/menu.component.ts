@@ -44,6 +44,10 @@ export class MenuComponent implements OnInit {
     this.closeDropdown();
   }
 
+  goToCart() {
+    this.router.navigate(['/cart']);
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;

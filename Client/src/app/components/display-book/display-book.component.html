@@ -46,6 +46,16 @@
         <span class="price">₪ {{ book.price }}</span>
       </div>
 
+      <!-- כמות -->
+      <div class="quantity-section">
+        <span class="label">כמות:</span>
+        <div class="quantity-control">
+          <button class="qty-btn" (click)="decreaseQuantity()">−</button>
+          <span class="qty-display">{{ quantity }}</span>
+          <button class="qty-btn" (click)="increaseQuantity()">+</button>
+        </div>
+      </div>
+
       <!-- תיאור -->
       <div class="book-description-section">
         <h3>תיאור הספר</h3>

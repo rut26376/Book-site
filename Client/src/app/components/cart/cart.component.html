@@ -1,0 +1,68 @@
+<div class="cart-container">
+    <!-- Header -->
+    <div class="cart-header">
+        <button class="back-btn" (click)="goBack()">← חזור</button>
+        <h1>סל קניות</h1>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-content">
+        @if(cartItems.length > 0) {
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-item" *ngFor="let item of cartItems">
+                    <!-- Book Image -->
+                    <div class="item-image">
+                        <img [src]="'/assets/book-img/' + item.book.picture" [alt]="item.book.bookName" />
+                    </div>
+
+                    <!-- Item Details -->
+                    <div class="item-details">
+                        <h3 class="item-title">{{ item.book.bookName }}</h3>
+                        <p class="item-author">{{ item.book.author }}</p>
+                        <p class="item-price">₪{{ item.book.price }}</p>
+                    </div>
+
+                    <!-- Quantity Control -->
+                    <div class="quantity-control">
+                        <button class="qty-btn" (click)="decreaseQuantity(item.book.id)">−</button>
+                        <span class="qty-display">{{ item.quantity }}</span>
+                        <button class="qty-btn" (click)="increaseQuantity(item.book.id)">+</button>
+                    </div>
+
+                    <!-- Item Total -->
+                    <div class="item-total">
+                        <p class="total-price">₪{{ (item.book.price * item.quantity).toFixed(2) }}</p>
+                    </div>
+
+                    <!-- Remove Button -->
+                    <button class="remove-btn" (click)="removeItem(item.book.id)" title="הסר מהעגלה">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>סה"כ פריטים:</span>
+                    <span>{{ totalQuantity }}</span>
+                </div>
+                <div class="summary-row total">
+                    <span>סה"כ:</span>
+                    <span>₪{{ totalPrice.toFixed(2) }}</span>
+                </div>
+                <button class="checkout-btn" (click)="checkout()">בצע קנייה</button>
+                <button class="clear-btn" (click)="clearCart()">נקה עגלה</button>
+            </div>
+        } @else {
+            <!-- Empty Cart -->
+            <div class="empty-cart">
+                <p>העגלה שלך ריקה</p>
+                <p class="empty-text">התחל בחיפוש ספרים וההוסף אותם לעגלה</p>
+                <button class="continue-btn" (click)="goBack()">חזור לחנות</button>
+            </div>
+        }
+    </div>
+</div>
+

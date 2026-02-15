@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../../services/books.service';
+import { CartService } from '../../services/cart.service';
 import { Book } from '../../models/book.model';
 
 @Component({
@@ -16,9 +17,11 @@ export class DisplayBookComponent implements OnInit {
   
   book: Book | null = null;
   bookService = inject(BooksService);
+  cartService = inject(CartService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   isLightboxOpen = false;
+  quantity = 1;
 
   ngOnInit() {
     // קבלת ה-ID מה-URL
@@ -47,8 +50,18 @@ export class DisplayBookComponent implements OnInit {
 
   addToCart() {
     if (this.book) {
-      console.log('הוסף לסל:', this.book.bookName);
-      // כאן תוסיפו את הלוגיקה להוספה לעגלה
+      this.cartService.addToCart(this.book, this.quantity);
+      alert(`הוסף לסל: ${this.book.bookName} - כמות: ${this.quantity}`);
+    }
+  }
+
+  increaseQuantity() {
+    this.quantity++;
+  }
+
+  decreaseQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
     }
   }
 
