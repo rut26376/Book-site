@@ -1,0 +1,98 @@
+const dbaccessorCustomers = require("../dal/db-accessor-customer")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+
+const dbCustomers = new dbaccessorCustomers();
+const SECRET_KEY = process.env.JWT_SECRET || "your-secret-key-change-this"
+
+class customerController{
+
+constructor(){}
+
+registerCustomer = async(req, res)=>{
+    try {
+        let customer = req.body
+        
+        // בדוק אם אימייל כבר קיים
+        let existingCustomer = await dbCustomers.findCustomerByEmail(customer.email)
+        if(existingCustomer) {
+            return res.status(400).json({ success: false, message: "אימייל זה כבר רשום" })
+        }
+        
+        // Hash הסיסמא
+        const hashedPassword = await bcrypt.hash(customer.password, 10)
+        customer.password = hashedPassword
+        
+        // שמור ב-DB
+        let data = await dbCustomers.registerCustomer(customer)
+        
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: data._id, email: data.email },
+            SECRET_KEY,
+            { expiresIn: "7d" }
+        )
+        
+        // החזר response
+        res.status(200).json({
+            success: true,
+            token: token,
+            user: {
+                id: data._id,
+                fullName: data.fullName,
+                email: data.email,
+                phone: data.phone,
+                city: data.city,
+                street: data.street
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "שגיאה בהרשמה" })
+    }
+}
+
+loginCustomer = async(req, res)=>{
+    try {
+        const { email, password } = req.body
+        
+        // בדוק אם אימייל קיים
+        let customer = await dbCustomers.findCustomerByEmail(email)
+        if(!customer) {
+            return res.status(401).json({ success: false, message: "אימייל או סיסמא לא נכונים" })
+        }
+        
+        // בדוק סיסמא
+        const validPassword = await bcrypt.compare(password, customer.password)
+        if(!validPassword) {
+            return res.status(401).json({ success: false, message: "אימייל או סיסמא לא נכונים" })
+        }
+        
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: customer._id, email: customer.email },
+            SECRET_KEY,
+            { expiresIn: "7d" }
+        )
+        
+        // החזר response
+        res.status(200).json({
+            success: true,
+            token: token,
+            user: {
+                id: customer._id,
+                fullName: customer.fullName,
+                email: customer.email,
+                phone: customer.phone,
+                city: customer.city,
+                street: customer.street
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "שגיאה בהתחברות" })
+    }
+}
+}
+module.exports = customerController;
+

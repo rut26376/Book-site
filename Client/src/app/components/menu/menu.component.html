@@ -13,6 +13,18 @@
     </div>
     <div class="header-right">
       <img src="../../../public/logo.png" alt="Logo" class="logo-image">
+      
+      <!-- Auth Buttons / User Profile -->
+      <div class="auth-section">
+        <div *ngIf="!currentUser" class="auth-buttons">
+          <button class="auth-btn login-btn" (click)="openLoginModal()">התחברות</button>
+          <button class="auth-btn register-btn" (click)="openRegisterModal()">הרשמה</button>
+        </div>
+        <div *ngIf="currentUser" class="user-profile">
+          <span class="user-name">{{ currentUser.fullName }}</span>
+          <button class="logout-btn" (click)="logout()">התנתקות</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -40,3 +52,6 @@
     </button>
   </nav>
 </div>
+
+<!-- Auth Modal -->
+<app-auth-modal></app-auth-modal>

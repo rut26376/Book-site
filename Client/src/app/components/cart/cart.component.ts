@@ -1,18 +1,23 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CartService, CartItem } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AuthModalComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
   cartService = inject(CartService);
   router = inject(Router);
+  authService = inject(AuthService);
+
+  @ViewChild(AuthModalComponent) authModal!: AuthModalComponent;
 
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
@@ -69,6 +74,14 @@ export class CartComponent implements OnInit {
       alert('העגלה שלך ריקה');
       return;
     }
+
+    // בדוק אם המשתמש מחובר
+    if (!this.authService.isLoggedIn()) {
+      alert('אנא התחבר כדי להמשיך בקנייה');
+      this.authModal.openModal(true); // פתח את מודל ההתחברות
+      return;
+    }
+
     console.log('תשלום עבור:', this.cartItems);
     // כאן תוסיפו את הלוגיקה של התשלום
   }

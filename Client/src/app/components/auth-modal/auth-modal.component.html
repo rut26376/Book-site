@@ -1,0 +1,82 @@
+<div class="auth-modal-overlay" [class.open]="isOpen" (click)="closeModal()"></div>
+
+<div class="auth-modal" [class.open]="isOpen" dir="rtl">
+  <div class="auth-modal-header">
+    <h2>{{ isLogin ? 'התחברות' : 'הרשמה' }}</h2>
+    <button class="close-btn" (click)="closeModal()">✕</button>
+  </div>
+
+  <div class="auth-modal-content">
+    <!-- Login Form -->
+    <div *ngIf="isLogin" class="auth-form">
+      <div class="form-group">
+        <label>אימייל</label>
+        <input type="email" [(ngModel)]="loginForm.email" placeholder="הכנס אימייל">
+      </div>
+
+      <div class="form-group">
+        <label>סיסמא</label>
+        <input type="password" [(ngModel)]="loginForm.password" placeholder="הכנס סיסמא">
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button class="submit-btn" (click)="onLogin()" [disabled]="isLoading">
+        {{ isLoading ? 'טוען...' : 'התחברות' }}
+      </button>
+
+      <p class="switch-mode">
+        אין לך חשבון? 
+        <button type="button" (click)="switchMode()" class="link-btn">הרשם כאן</button>
+      </p>
+    </div>
+
+    <!-- Register Form -->
+    <div *ngIf="!isLogin" class="auth-form">
+      <div class="form-group">
+        <label>שם מלא</label>
+        <input type="text" [(ngModel)]="registerForm.fullName" placeholder="הכנס שם מלא">
+      </div>
+
+      <div class="form-group">
+        <label>אימייל</label>
+        <input type="email" [(ngModel)]="registerForm.email" placeholder="הכנס אימייל">
+      </div>
+
+      <div class="form-group">
+        <label>סיסמא</label>
+        <input type="password" [(ngModel)]="registerForm.password" placeholder="הכנס סיסמא (מינימום 6 תווים)">
+      </div>
+
+      <div class="form-group">
+        <label>טלפון (אופציונלי)</label>
+        <input type="tel" [(ngModel)]="registerForm.phone" placeholder="מספר טלפון" dir="rtl">
+      </div>
+
+      <div class="form-group">
+        <label>עיר (אופציונלי)</label>
+        <input type="text" [(ngModel)]="registerForm.city" placeholder="עיר" >
+      </div>
+
+      <div class="form-group">
+        <label>רחוב (אופציונלי)</label>
+        <input type="text" [(ngModel)]="registerForm.street" placeholder="כתובת">
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button class="submit-btn" (click)="onRegister()" [disabled]="isLoading">
+        {{ isLoading ? 'טוען...' : 'הרשמה' }}
+      </button>
+
+      <p class="switch-mode">
+        יש לך כבר חשבון? 
+        <button type="button" (click)="switchMode()" class="link-btn">התחבר כאן</button>
+      </p>
+    </div>
+  </div>
+</div>

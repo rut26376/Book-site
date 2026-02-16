@@ -1,8 +1,11 @@
 const myexpress = require("express")
+const cors = require("cors")
 const db  = require("./dal/db-accessor")
 const bookRouter = require("./routes/book-router")
+const customerRouter = require("./routes/customer-router")
 const app = myexpress()
 
+app.use(cors())
 app.use(myexpress.urlencoded({extends:true}))
 app.use(myexpress.json())
 
@@ -20,5 +23,6 @@ app.listen(port, hostname, ()=>{
 })
 
 app.use("/books", bookRouter)
+app.use("/auth", customerRouter)
 
 

@@ -86,16 +86,85 @@
 .header-right {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
-.smile {
-  font-size: 28px;
+.logo-image {
+  width: 50px;
+  height: auto;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.auth-btn {
+  background: none;
+  border: 1px solid #4a3728;
+  color: #4a3728;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
 }
 
-.smile:hover {
-  transform: scale(1.1);
+.login-btn {
+  background: white;
+}
+
+.login-btn:hover {
+  background: #4a3728;
+  color: white;
+}
+
+.register-btn {
+  background: #4a3728;
+  color: white;
+  border-color: #4a3728;
+}
+
+.register-btn:hover {
+  background: #5d4837;
+  border-color: #5d4837;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.user-name {
+  font-size: 12px;
+  color: #4a3728;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: #4a3728;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #5d4837;
 }
 
 .logo-image {
