@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import categoriesData from '../../data/categories.json';
 import { Book } from '../../models/book.model';
+import { CartDrawerService } from '../../services/cart-drawer.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,7 +20,7 @@ export class MenuComponent implements OnInit {
   router = inject(Router);
   searchBooks: Book[] = [];
   searchQuery: string = '';
-
+  drawerService = inject(CartDrawerService);
   search(query: string) {
     if (!query || query.trim() === '') {
       this.searchBooks = [];
@@ -45,7 +46,8 @@ export class MenuComponent implements OnInit {
   }
 
   goToCart() {
-    this.router.navigate(['/cart']);
+    // this.router.navigate(['/cart']);
+    this.drawerService.open();
   }
 
   @HostListener('document:click', ['$event'])

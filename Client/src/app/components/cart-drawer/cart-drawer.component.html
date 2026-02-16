@@ -1,0 +1,31 @@
+<div class="cart-drawer-overlay" [class.open]="isOpen" (click)="close()"></div>
+
+<div class="cart-drawer" [class.open]="isOpen">
+  <div class="cart-drawer-header">
+    <button class="close-btn" (click)="close()">✕</button>
+  </div>
+
+  <div class="cart-drawer-content">
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <p>הסל ריק</p>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="cart-items-list">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <img [src]="'/assets/book-img/' + item.picture" [alt]="item.bookName" class="item-image" />
+        <div class="item-details">
+          <h3>{{ item.bookName }}</h3>
+          <p class="item-price">₪{{ item.price }}</p>
+          <p class="item-quantity">כמות: {{ item.quantity }}</p>
+        </div>
+        <img class="remove-btn" src="/assets/category-ico/trash.png" alt="trash" (click)="removeItem(item.id)"/>
+      </div>
+
+      <div class="cart-summary">
+        <p class="total">סה"כ: ₪{{ totalPrice }}</p>
+      </div>
+
+      <button class="go-to-cart-btn" (click)="goToCart()">עבור לסל</button>
+    </div>
+  </div>
+</div>

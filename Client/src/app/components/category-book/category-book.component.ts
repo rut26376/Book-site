@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../models/book.model';
 import { BooksService } from '../../services/books.service';
 import { CartService } from '../../services/cart.service';
+import { CartDrawerService } from '../../services/cart-drawer.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,6 +18,7 @@ export class CategoryBookComponent {
   router = inject(Router);
   bookService = inject(BooksService);
   cartService = inject(CartService);
+  drawerService = inject(CartDrawerService);
   
   categoryName: string = '';
   books: Book[] = [];
@@ -72,9 +74,8 @@ export class CategoryBookComponent {
   addToCart(book: Book) {
     const quantity = this.bookQuantities[book.id] || 1;
     this.cartService.addToCart(book, quantity);
-    alert(`הוסף לסל: ${book.bookName} - כמות: ${quantity}`);
-    // אפשר להוסיף גם ניווט לסל
-    // this.router.navigate(['/cart']);
+    this.drawerService.open();
+    this.bookQuantities[book.id] = 1;
   }
 
   increaseQuantity(bookId: number) {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../../services/books.service';
 import { CartService } from '../../services/cart.service';
+import { CartDrawerService } from '../../services/cart-drawer.service';
 import { Book } from '../../models/book.model';
 
 @Component({
@@ -18,6 +19,7 @@ export class DisplayBookComponent implements OnInit {
   book: Book | null = null;
   bookService = inject(BooksService);
   cartService = inject(CartService);
+  drawerService = inject(CartDrawerService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   isLightboxOpen = false;
@@ -51,7 +53,8 @@ export class DisplayBookComponent implements OnInit {
   addToCart() {
     if (this.book) {
       this.cartService.addToCart(this.book, this.quantity);
-      alert(`הוסף לסל: ${this.book.bookName} - כמות: ${this.quantity}`);
+      this.drawerService.open();
+      this.quantity = 1;
     }
   }
 
