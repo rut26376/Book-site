@@ -11,12 +11,12 @@
     <div *ngIf="isLogin" class="auth-form">
       <div class="form-group">
         <label>אימייל</label>
-        <input type="email" [(ngModel)]="loginForm.email" placeholder="הכנס אימייל">
+        <input type="email" [(ngModel)]="loginForm.email" placeholder="הכנס אימייל" (keyup.enter)="onLogin()">
       </div>
 
       <div class="form-group">
         <label>סיסמא</label>
-        <input type="password" [(ngModel)]="loginForm.password" placeholder="הכנס סיסמא">
+        <input type="password" [(ngModel)]="loginForm.password" placeholder="הכנס סיסמא" (keyup.enter)="onLogin()">
       </div>
 
       <div *ngIf="errorMessage" class="error-message">
@@ -36,33 +36,33 @@
     <!-- Register Form -->
     <div *ngIf="!isLogin" class="auth-form">
       <div class="form-group">
-        <label>שם מלא</label>
-        <input type="text" [(ngModel)]="registerForm.fullName" placeholder="הכנס שם מלא">
+        <label>שם מלא <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="registerForm.fullName" placeholder="הכנס שם מלא" (keyup.enter)="onRegister()">
       </div>
 
       <div class="form-group">
-        <label>אימייל</label>
-        <input type="email" [(ngModel)]="registerForm.email" placeholder="הכנס אימייל">
+        <label>אימייל <span class="required">*</span></label>
+        <input type="email" [(ngModel)]="registerForm.email" placeholder="הכנס אימייל" (keyup.enter)="onRegister()">
       </div>
 
       <div class="form-group">
-        <label>סיסמא</label>
-        <input type="password" [(ngModel)]="registerForm.password" placeholder="הכנס סיסמא (מינימום 6 תווים)">
+        <label>סיסמא <span class="required">*</span></label>
+        <input type="password" [(ngModel)]="registerForm.password" placeholder="הכנס סיסמא (מינימום 6 תווים)" (keyup.enter)="onRegister()">
       </div>
 
       <div class="form-group">
-        <label>טלפון (אופציונלי)</label>
-        <input type="tel" [(ngModel)]="registerForm.phone" placeholder="מספר טלפון" dir="rtl">
+        <label>טלפון</label>
+        <input type="tel" [(ngModel)]="registerForm.phone" placeholder="מספר טלפון" dir="rtl" (keyup.enter)="onRegister()">
       </div>
 
       <div class="form-group">
-        <label>עיר (אופציונלי)</label>
-        <input type="text" [(ngModel)]="registerForm.city" placeholder="עיר" >
+        <label>עיר</label>
+        <input type="text" [(ngModel)]="registerForm.city" placeholder="עיר" (keyup.enter)="onRegister()">
       </div>
 
       <div class="form-group">
-        <label>רחוב (אופציונלי)</label>
-        <input type="text" [(ngModel)]="registerForm.street" placeholder="כתובת">
+        <label>רחוב</label>
+        <input type="text" [(ngModel)]="registerForm.street" placeholder="כתובת" (keyup.enter)="onRegister()">
       </div>
 
       <div *ngIf="errorMessage" class="error-message">
