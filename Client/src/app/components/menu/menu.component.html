@@ -2,19 +2,10 @@
   <!-- Header -->
   <header class="menu-header">
     <div class="header-left">
-        <img src="/assets/general/store.png" alt="store" class="cart-icon">
-      <div class="logo">029999999</div>
+      <div class="logo">{{ storePhone }}</div>
       <button class="cart-btn" (click)="goToCart()" title="סל קניות">
         <img src="/assets/general/cart.png" alt="Basket" class="cart-icon">
       </button>
-    </div>
-    <div class="search-box">
-      <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery"
-        (ngModelChange)="search(searchQuery)">
-    </div>
-    <div class="header-right">
-      <img src="../../../public/logo.png" alt="Logo" class="logo-image">
-      
       <!-- Auth Buttons / User Profile -->
       <div class="auth-section">
         <div *ngIf="!currentUser" class="auth-buttons">
@@ -26,6 +17,13 @@
           <button class="logout-btn" (click)="logout()">התנתקות</button>
         </div>
       </div>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="חיפוש..." class="search-input" [(ngModel)]="searchQuery"
+        (ngModelChange)="search(searchQuery)">
+    </div>
+    <div class="header-right">
+      <img src="../../../public/logo.png" alt="Logo" class="logo-image">
     </div>
   </header>
 
@@ -56,3 +54,4 @@
 
 <!-- Auth Modal -->
 <app-auth-modal></app-auth-modal>
+

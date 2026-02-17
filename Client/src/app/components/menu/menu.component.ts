@@ -2,6 +2,7 @@ import { Component, inject, OnInit, HostListener, ViewChild } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { BooksService } from '../../services/books.service';
 import { AuthService } from '../../services/auth.service';
 import categoriesData from '../../data/categories.json';
@@ -24,10 +25,12 @@ export class MenuComponent implements OnInit {
   bookService = inject(BooksService);
   router = inject(Router);
   authService = inject(AuthService);
+  http = inject(HttpClient);
   searchBooks: Book[] = [];
   searchQuery: string = '';
   drawerService = inject(CartDrawerService);
   currentUser: Customer | null = null;
+  storePhone: string = '029999999';
   search(query: string) {
     if (!query || query.trim() === '') {
       this.searchBooks = [];
@@ -72,6 +75,16 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     // טעינת הקטגוריות מה-JSON
     this.categories = categoriesData.categories;
+
+    // טעינת מספר הטלפון מה-JSON
+    this.http.get<any>('/assets/config/shipping.json').subscribe({
+      next: (config) => {
+        this.storePhone = config.store.phone;
+      },
+      error: (err) => {
+        console.error('שגיאה בטעינת קובץ הקונפיגורציה:', err);
+      }
+    });
 
     // טעינת הספרים
     this.bookService.books$.subscribe(books => {

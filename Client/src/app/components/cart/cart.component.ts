@@ -77,7 +77,6 @@ export class CartComponent implements OnInit {
 
     // בדוק אם המשתמש מחובר
     if (!this.authService.isLoggedIn()) {
-      alert('אנא התחבר כדי להמשיך בקנייה');
       this.authModal.openModal(true); // פתח את מודל ההתחברות
       return;
     }
