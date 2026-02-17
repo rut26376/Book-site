@@ -1,0 +1,187 @@
+<div class="order-container" dir="rtl">
+    <!-- Success Message -->
+    <div *ngIf="orderSuccess" class="success-overlay">
+        <div class="success-message">
+            <h2>✅ ההזמנה בוצעה בהצלחה!</h2>
+            <p>תודה על הקנייה שלך</p>
+            <p>מפנה אותך הביתה...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="order-header">
+        <button class="back-btn" (click)="goBack()">← חזור לעגלה</button>
+        <h1>סיום הזמנה</h1>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-container">
+        <button class="tab-btn" [class.active]="activeTab === 'customer'" [disabled]="!isTabValid('customer')"
+            (click)="setTab('customer')">
+            📋 פרטי המזמין
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'payment'" [disabled]="!isTabValid('payment')"
+            (click)="setTab('payment')">
+            💳 פרטי תשלום
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'summary'" (click)="setTab('summary')">
+            📦 סיכום הזמנה
+        </button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="order-content">
+        <!-- Customer Info Tab -->
+        <div *ngIf="activeTab === 'customer'" class="tab-content" (click)="closeCityDropdown()">
+            <h2>פרטי המזמין</h2>
+            <form class="form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>שם מלא *</label>
+                        <input type="text" [(ngModel)]="customerInfo.fullName" name="fullName"
+                            placeholder="הכנס שם מלא">
+                    </div>
+                    <div class="form-group">
+                        <label>אימייל *</label>
+                        <input type="email" [(ngModel)]="customerInfo.email" name="email" placeholder="הכנס אימייל">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>טלפון *</label>
+                        <input type="tel" [(ngModel)]="customerInfo.phone" name="phone" placeholder="הכנס טלפון"
+                            dir="ltr">
+                    </div>
+                    <div class="form-group">
+                        <label>עיר</label>
+                        <div class="custom-city-dropdown" (click)="$event.stopPropagation()">
+                            <div class="dropdown-header" (click)="toggleCityDropdown()">
+                                <span class="selected-city">{{ customerInfo.city || 'בחר עיר...' }}</span>
+                                <span class="dropdown-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-menu" *ngIf="showCityDropdown">
+                                <input 
+                                    type="text" 
+                                    class="dropdown-search"
+                                    placeholder="חפש עיר..." 
+                                    [(ngModel)]="citySearchTerm"
+                                    name="citySearch"
+                                    (input)="filterCities()"
+                                    (click)="$event.stopPropagation()">
+                                <div class="dropdown-options">
+                                    <div class="dropdown-option" 
+                                        *ngFor="let city of filteredCities" 
+                                        (click)="selectCity(city)"
+                                        [class.selected]="city === customerInfo.city">
+                                        {{ city }}
+                                    </div>
+                                    <div class="no-results" *ngIf="filteredCities.length === 0 && citySearchTerm">
+                                        לא נמצאו ערים
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>כתובת</label>
+                        <input type="text" [(ngModel)]="customerInfo.street" name="street" placeholder="הכנס כתובת">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="next-btn" (click)="setTab('payment')"
+                        [disabled]="!isTabValid('customer')">
+                        המשך →
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Payment Info Tab -->
+        <div *ngIf="activeTab === 'payment'" class="tab-content">
+            <h2>פרטי תשלום</h2>
+            <form class="form">
+                <div class="form-group full-width">
+                    <label>מספר כרטיס אשראי *</label>
+                    <input type="text" [(ngModel)]="paymentInfo.cardNumber" name="cardNumber"
+                        placeholder="0000 0000 0000 0000" maxlength="19"
+                        (ngModelChange)="paymentInfo.cardNumber = formatCardNumber($event)">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>תוקף (MM/YY) *</label>
+                        <input type="text" [(ngModel)]="paymentInfo.expiryDate" name="expiryDate" placeholder="MM/YY"
+                            maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV *</label>
+                        <input type="text" [(ngModel)]="paymentInfo.cvv" name="cvv" placeholder="000" maxlength="3"
+                            dir="ltr">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="back-btn-form" (click)="setTab('customer')">
+                        ← חזור
+                    </button>
+                    <button type="button" class="next-btn" (click)="setTab('summary')"
+                        [disabled]="!isTabValid('payment')">
+                        המשך →
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Summary Tab -->
+        <div *ngIf="activeTab === 'summary'" class="tab-content">
+            <h2>סיכום הזמנה</h2>
+
+            <div class="summary-section">
+                <h3>פרטי המזמין</h3>
+                <div class="summary-info">
+                    <p><strong>שם:</strong> {{ customerInfo.fullName }}</p>
+                    <p><strong>אימייל:</strong> {{ customerInfo.email }}</p>
+                    <p><strong>טלפון:</strong> {{ customerInfo.phone }}</p>
+                    <p *ngIf="customerInfo.city"><strong>עיר:</strong> {{ customerInfo.city }}</p>
+                    <p *ngIf="customerInfo.street"><strong>כתובת:</strong> {{ customerInfo.street }}</p>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3>הספרים שלך</h3>
+                <div class="books-summary">
+                    <div class="book-row" *ngFor="let item of cartItems">
+                        <span>{{ item.book.bookName }} (x{{ item.quantity }})</span>
+                        <span>₪{{ (item.book.price * item.quantity).toFixed(2) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section summary-total">
+                <div class="total-row">
+                    <span>סה"כ פריטים:</span>
+                    <span>{{ totalQuantity }}</span>
+                </div>
+                <div class="total-row highlight">
+                    <span>סה"כ לתשלום:</span>
+                    <span>₪{{ totalPrice.toFixed(2) }}</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="back-btn-form" (click)="setTab('payment')">
+                    ← חזור לתשלום
+                </button>
+                <button type="button" class="submit-btn" (click)="completeOrder()" [disabled]="isProcessing">
+                    <span *ngIf="!isProcessing">אישור הזמנה</span>
+                    <span *ngIf="isProcessing">עיבוד הזמנה...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

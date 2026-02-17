@@ -82,7 +82,7 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    console.log('תשלום עבור:', this.cartItems);
-    // כאן תוסיפו את הלוגיקה של התשלום
+    // עבור לעמוד הזמנה
+    this.router.navigate(['/order']);
   }
 }
