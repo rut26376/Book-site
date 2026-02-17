@@ -23,6 +23,9 @@ export class OrderComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
+  shippingCost: number = 0;
+  shippingDescription: string = '';
+  shippingDetails: string[] = [];
   activeTab: string = 'customer'; // 'customer', 'payment', 'summary'
   isProcessing: boolean = false;
   orderSuccess: boolean = false;
@@ -37,18 +40,25 @@ export class OrderComponent implements OnInit {
     email: '',
     phone: '',
     city: '',
-    street: ''
+    street: '',
+    notes: ''
   };
 
   // Payment Info
   paymentInfo = {
     cardNumber: '',
-    cardHolder: '',
     expiryDate: '',
     cvv: ''
   };
 
   ngOnInit() {
+    // Load shipping config from JSON
+    this.http.get<any>('/assets/config/shipping.json').subscribe(config => {
+      this.shippingCost = config.shipping.cost;
+      this.shippingDescription = config.shipping.description;
+      this.shippingDetails = config.shipping.details;
+    });
+
     // Load cities from API
     fetchIsraelCities(this.http).then((cities: string[]) => {
       this.cities = cities;
@@ -63,7 +73,8 @@ export class OrderComponent implements OnInit {
         email: currentUser.email,
         phone: currentUser.phone || '',
         city: currentUser.city || '',
-        street: currentUser.street || ''
+        street: currentUser.street || '',
+        notes: ''
       };
     }
 
@@ -109,6 +120,10 @@ export class OrderComponent implements OnInit {
     return this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
   }
 
+  getTotalWithShipping(): number {
+    return this.totalPrice + this.shippingCost;
+  }
+
   setTab(tab: string) {
     this.activeTab = tab;
   }
@@ -118,7 +133,10 @@ export class OrderComponent implements OnInit {
       return !!(this.customerInfo.fullName && this.customerInfo.email && this.customerInfo.phone);
     }
     if (tab === 'payment') {
-      return !!(this.paymentInfo.cardNumber && this.paymentInfo.cardHolder && this.paymentInfo.expiryDate && this.paymentInfo.cvv);
+      return !!(this.paymentInfo.cardNumber && this.paymentInfo.expiryDate && this.paymentInfo.cvv);
+    }
+    if (tab === 'summary') {
+      return !!(this.isTabValid('customer') && this.isTabValid('payment'));
     }
     return true;
   }

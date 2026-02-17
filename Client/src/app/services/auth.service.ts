@@ -101,4 +101,8 @@ export class AuthService {
   getToken(): string | null {
     return this.token.value;
   }
+
+  getNextCustomerId(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/next-id`);
+  }
 }

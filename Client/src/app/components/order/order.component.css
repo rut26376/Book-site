@@ -116,6 +116,71 @@
   grid-column: 1 / -1;
 }
 
+.notes-textarea {
+  padding: 10px 12px;
+  border: 2px solid #dcc9b6;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: white;
+  resize: vertical;
+  min-height: 80px;
+  direction: rtl;
+}
+
+.notes-textarea:focus {
+  outline: none;
+  border-color: #4a3728;
+  box-shadow: 0 0 0 3px rgba(74, 55, 40, 0.1);
+}
+
+.shipping-info {
+  background: #f0ebe3;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 20px;
+  border-right: 4px solid #dcc9b6;
+  direction: rtl;
+}
+
+.shipping-info h3 {
+  margin: 0 0 10px 0;
+  color: #4a3728;
+  font-size: 16px;
+}
+
+.shipping-info p {
+  margin: 5px 0;
+  color: #4a3728;
+  font-size: 14px;
+}
+
+.shipping-details {
+  color: #666;
+  font-size: 13px !important;
+}
+
+.shipping-details-list {
+  margin: 10px 0 0 0;
+  padding-right: 20px;
+  list-style: none;
+  color: #666;
+  font-size: 13px;
+}
+
+.shipping-details-list li {
+  margin: 5px 0;
+  padding-right: 10px;
+}
+
+.shipping-details-list li:before {
+  content: "✓ ";
+  color: #4a3728;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
 .form-group label {
   font-size: 14px;
   color: #4a3728;

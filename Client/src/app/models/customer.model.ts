@@ -4,6 +4,7 @@ export class Customer {
   password!: string;
   phone!: string;
   street!: string;
+  houseNumber!: string;
   city!: string;
   email!: string;
 }

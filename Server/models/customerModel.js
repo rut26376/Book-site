@@ -9,6 +9,7 @@ const customerScheme = new mymongo.Schema(
         password: String,
         phone: String,
         street: String,
+        houseNumber: String,
         city: String,
         email: String
     }

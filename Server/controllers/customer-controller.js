@@ -93,6 +93,26 @@ loginCustomer = async(req, res)=>{
         res.status(500).json({ success: false, message: "שגיאה בהתחברות" })
     }
 }
+
+getNextCustomerId = async(req, res)=>{
+    try {
+        // קבל את ID הלקוח הגדול ביותר מה-DB
+        const lastCustomer = await dbCustomers.getLastCustomerId()
+        const nextId = lastCustomer ? lastCustomer.id + 1 : 1
+        
+        res.status(200).json({
+            success: true,
+            nextId: nextId
+        })
+    } catch (error) {
+        console.log(error)
+        // אם יש שגיאה, התחל מ-1
+        res.status(200).json({
+            success: true,
+            nextId: 1
+        })
+    }
+}
 }
 module.exports = customerController;
 

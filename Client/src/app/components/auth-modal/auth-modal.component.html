@@ -34,7 +34,7 @@
     </div>
 
     <!-- Register Form -->
-    <div *ngIf="!isLogin" class="auth-form">
+    <div *ngIf="!isLogin" class="auth-form" (click)="closeCityDropdown()">
       <div class="form-group">
         <label>שם מלא <span class="required">*</span></label>
         <input type="text" [(ngModel)]="registerForm.fullName" placeholder="הכנס שם מלא" (keyup.enter)="onRegister()">
@@ -57,12 +57,45 @@
 
       <div class="form-group">
         <label>עיר</label>
-        <input type="text" [(ngModel)]="registerForm.city" placeholder="עיר" (keyup.enter)="onRegister()">
+        <div class="custom-city-dropdown" (click)="$event.stopPropagation()">
+          <div class="dropdown-header" (click)="toggleCityDropdown()">
+            <span class="selected-city">{{ registerForm.city || 'בחר עיר...' }}</span>
+            <span class="dropdown-arrow">▼</span>
+          </div>
+          <div class="dropdown-menu" *ngIf="showCityDropdown">
+            <input 
+              type="text" 
+              class="dropdown-search"
+              placeholder="חפש עיר..." 
+              [(ngModel)]="citySearchTerm"
+              name="citySearch"
+              (input)="filterCities()"
+              (click)="$event.stopPropagation()">
+            <div class="dropdown-options">
+              <div class="dropdown-option" 
+                *ngFor="let city of filteredCities" 
+                (click)="selectCity(city)"
+                [class.selected]="city === registerForm.city">
+                {{ city }}
+              </div>
+              <div class="no-results" *ngIf="filteredCities.length === 0 && citySearchTerm">
+                לא נמצאו ערים
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>רחוב</label>
-        <input type="text" [(ngModel)]="registerForm.street" placeholder="כתובת" (keyup.enter)="onRegister()">
+      <div class="form-row-two">
+        <div class="form-group">
+          <label>רחוב</label>
+          <input type="text" [(ngModel)]="registerForm.street" placeholder="שם הרחוב" (keyup.enter)="onRegister()">
+        </div>
+
+        <div class="form-group">
+          <label>מספר בית</label>
+          <input type="text" [(ngModel)]="registerForm.houseNumber" placeholder="מספר בית" (keyup.enter)="onRegister()">
+        </div>
       </div>
 
       <div *ngIf="errorMessage" class="error-message">
