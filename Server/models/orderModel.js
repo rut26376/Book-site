@@ -15,6 +15,7 @@ const orderScheme = new mymongo.Schema(
     {
         id: Number,
         custId: Number,
+        fullName: String,
         date: { type: Date, default: Date.now },
         status: { 
             type: String, 

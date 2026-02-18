@@ -9,6 +9,7 @@ export class Order {
   _id?: string; // MongoDB יוצר אוטומטית
   id?: number; // Optional - השרת יוצר אוטומטית
   custId!: number; // Customer ID (המספר הסדרתי של הלקוח)
+  fullName!: string; // שם הלקוח
   date!: Date;
   status!: "חדש" | "בטיפול" | "הושלם";
   items!: OrderItem[];

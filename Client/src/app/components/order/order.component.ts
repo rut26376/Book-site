@@ -174,6 +174,7 @@ export class OrderComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     const order: Order = {
       custId: currentUser?.id || 0, // ID של הלקוח
+      fullName: this.customerInfo.fullName, // הוסף שם הלקוח
       date: new Date(),
       status: "חדש",
       items: this.cartItems.map(item => ({
