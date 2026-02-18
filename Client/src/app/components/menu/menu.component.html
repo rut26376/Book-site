@@ -5,6 +5,10 @@
       <div class="logo">{{ storePhone }}</div>
       <button class="cart-btn" (click)="goToCart()" title="סל קניות">
         <img src="/assets/general/cart.png" alt="Basket" class="cart-icon">
+        <div class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</div>
+      </button>
+      <button class="cart-btn" title="סניפים">
+        <img src="/assets/general/store.png" alt="Stores" class="cart-icon">
       </button>
       <!-- Auth Buttons / User Profile -->
       <div class="auth-section">

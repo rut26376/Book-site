@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BooksService } from '../../services/books.service';
 import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 import categoriesData from '../../data/categories.json';
 import { Book } from '../../models/book.model';
 import { CartDrawerService } from '../../services/cart-drawer.service';
@@ -29,8 +30,10 @@ export class MenuComponent implements OnInit {
   searchBooks: Book[] = [];
   searchQuery: string = '';
   drawerService = inject(CartDrawerService);
+  cartService = inject(CartService);
   currentUser: Customer | null = null;
   storePhone: string = '029999999';
+  cartItemCount: number = 0;
   search(query: string) {
     if (!query || query.trim() === '') {
       this.searchBooks = [];
@@ -94,6 +97,11 @@ export class MenuComponent implements OnInit {
     // מעקב אחר המשתמש המחובר
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
+    });
+
+    // מעקב אחר פריטים בעגלה
+    this.cartService.cartItems$.subscribe(items => {
+      this.cartItemCount = items.reduce((sum, item) => sum + (item.quantity || 0), 0);
     });
   }
 

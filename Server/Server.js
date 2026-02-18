@@ -3,6 +3,7 @@ const cors = require("cors")
 const db  = require("./dal/db-accessor")
 const bookRouter = require("./routes/book-router")
 const customerRouter = require("./routes/customer-router")
+const orderRouter = require("./routes/order-router")
 const app = myexpress()
 
 app.use(cors())
@@ -24,5 +25,6 @@ app.listen(port, hostname, ()=>{
 
 app.use("/books", bookRouter)
 app.use("/auth", customerRouter)
+app.use("/orders", orderRouter)
 
 

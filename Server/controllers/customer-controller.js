@@ -23,12 +23,16 @@ registerCustomer = async(req, res)=>{
         const hashedPassword = await bcrypt.hash(customer.password, 10)
         customer.password = hashedPassword
         
+        // קבל את ID הבא
+        const lastCustomer = await dbCustomers.getLastCustomerId()
+        customer.id = lastCustomer ? lastCustomer.id + 1 : 1
+        
         // שמור ב-DB
         let data = await dbCustomers.registerCustomer(customer)
         
         // Generate JWT token
         const token = jwt.sign(
-            { id: data._id, email: data.email },
+            { id: data.id, email: data.email },
             SECRET_KEY,
             { expiresIn: "7d" }
         )
@@ -38,12 +42,13 @@ registerCustomer = async(req, res)=>{
             success: true,
             token: token,
             user: {
-                id: data._id,
+                id: data.id, // המספר הסדרתי
                 fullName: data.fullName,
                 email: data.email,
                 phone: data.phone,
                 city: data.city,
-                street: data.street
+                street: data.street,
+                houseNumber: data.houseNumber
             }
         })
     } catch (error) {
@@ -70,7 +75,7 @@ loginCustomer = async(req, res)=>{
         
         // Generate JWT token
         const token = jwt.sign(
-            { id: customer._id, email: customer.email },
+            { id: customer.id, email: customer.email },
             SECRET_KEY,
             { expiresIn: "7d" }
         )
@@ -80,12 +85,13 @@ loginCustomer = async(req, res)=>{
             success: true,
             token: token,
             user: {
-                id: customer._id,
+                id: customer.id, // המספר הסדרתי
                 fullName: customer.fullName,
                 email: customer.email,
                 phone: customer.phone,
                 city: customer.city,
-                street: customer.street
+                street: customer.street,
+                houseNumber: customer.houseNumber
             }
         })
     } catch (error) {

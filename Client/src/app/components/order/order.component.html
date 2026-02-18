@@ -16,15 +16,18 @@
 
     <!-- Tabs Navigation -->
     <div class="tabs-container">
-        <button class="tab-btn" [class.active]="activeTab === 'customer'" [disabled]="!isTabValid('customer')"
+        <button class="tab-btn" [class.active]="activeTab === 'customer'" 
+            [disabled]="activeTab !== 'customer' && !isTabValid('customer')"
             (click)="setTab('customer')">
             📋 פרטי המזמין
         </button>
-        <button class="tab-btn" [class.active]="activeTab === 'payment'" [disabled]="!isTabValid('payment')"
+        <button class="tab-btn" [class.active]="activeTab === 'payment'" 
+            [disabled]="activeTab !== 'payment' && !isTabValid('customer') && !isTabValid('payment')"
             (click)="setTab('payment')">
             💳 פרטי תשלום
         </button>
-        <button class="tab-btn" [class.active]="activeTab === 'summary'" [disabled]="!isTabValid('summary')"
+        <button class="tab-btn" [class.active]="activeTab === 'summary'" 
+            [disabled]="activeTab !== 'summary' && !isTabValid('payment') && !isTabValid('summary')"
             (click)="setTab('summary')">
             📦 סיכום הזמנה
         </button>
@@ -55,7 +58,7 @@
                             dir="ltr">
                     </div>
                     <div class="form-group">
-                        <label>עיר</label>
+                        <label>עיר *</label>
                         <div class="custom-city-dropdown" (click)="$event.stopPropagation()">
                             <div class="dropdown-header" (click)="toggleCityDropdown()">
                                 <span class="selected-city">{{ customerInfo.city || 'בחר עיר...' }}</span>
@@ -88,8 +91,12 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>כתובת</label>
-                        <input type="text" [(ngModel)]="customerInfo.street" name="street" placeholder="הכנס כתובת">
+                        <label>רחוב *</label>
+                        <input type="text" [(ngModel)]="customerInfo.street" name="street" placeholder="הכנס רחוב">
+                    </div>
+                    <div class="form-group">
+                        <label>מספר בית *</label>
+                        <input type="text" [(ngModel)]="customerInfo.houseNumber" name="houseNumber" placeholder="הכנס מספר בית">
                     </div>
                 </div>
 
@@ -163,7 +170,8 @@
                     <p><strong>אימייל:</strong> {{ customerInfo.email }}</p>
                     <p><strong>טלפון:</strong> {{ customerInfo.phone }}</p>
                     <p *ngIf="customerInfo.city"><strong>עיר:</strong> {{ customerInfo.city }}</p>
-                    <p *ngIf="customerInfo.street"><strong>כתובת:</strong> {{ customerInfo.street }}</p>
+                    <p *ngIf="customerInfo.street"><strong>רחוב:</strong> {{ customerInfo.street }}</p>
+                    <p *ngIf="customerInfo.houseNumber"><strong>מספר בית:</strong> {{ customerInfo.houseNumber }}</p>
                     <p *ngIf="customerInfo.notes"><strong>הערות:</strong> {{ customerInfo.notes }}</p>
                 </div>
             </div>

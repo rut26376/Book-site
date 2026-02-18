@@ -21,7 +21,6 @@ export class AuthModalComponent implements OnInit {
   isLogin = true;
   isLoading = false;
   errorMessage = '';
-  private nextCustomerId: number = 1;
 
   loginForm = {
     email: '',
@@ -29,7 +28,6 @@ export class AuthModalComponent implements OnInit {
   };
 
   registerForm: Customer = {
-    id: 0,
     fullName: '',
     email: '',
     password: '',
@@ -50,17 +48,6 @@ export class AuthModalComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.closeModal();
-      }
-    });
-
-    // קבלת ה-ID הבא מהשרת
-    this.authService.getNextCustomerId().subscribe({
-      next: (response: any) => {
-        this.nextCustomerId = response.nextId;
-      },
-      error: (err: any) => {
-        console.error('שגיאה בקבלת ID הבא:', err);
-        this.nextCustomerId = 1;
       }
     });
 
@@ -137,9 +124,7 @@ export class AuthModalComponent implements OnInit {
       return;
     }
 
-    // יצירת ID יחודי ללקוח חדש
-    this.registerForm.id = this.generateUniqueId();
-
+    // השרת יוצר ID אוטומטית - אין צורך ליצור בקליינט
     this.isLoading = true;
     this.authService.register(this.registerForm).subscribe({
       next: (response) => {
@@ -154,14 +139,6 @@ export class AuthModalComponent implements OnInit {
       }
     });
   }
-
-  // יצירת ID יחודי עולה
-  generateUniqueId(): number {
-    const id = this.nextCustomerId;
-    this.nextCustomerId++;
-    return id;
-  }
-
   // ניהול דרופדאון של הערים
   toggleCityDropdown() {
     this.showCityDropdown = !this.showCityDropdown;

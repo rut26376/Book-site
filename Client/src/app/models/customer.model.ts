@@ -1,5 +1,6 @@
 export class Customer {
-  id!: number;
+  _id?: string; // MongoDB יוצר אוטומטית
+  id?: number; // Optional - השרת יוצר אוטומטית
   fullName!: string;
   password!: string;
   phone!: string;
