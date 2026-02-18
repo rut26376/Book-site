@@ -1,5 +1,6 @@
 const dbaccessorOrders = require("../dal/db-accessor-order")
 const dbOrders = new dbaccessorOrders();
+const emailService = require("../services/email-service");
 
 class orderController{
 
@@ -14,6 +15,14 @@ createOrder = async(req, res)=>{
         order.id = lastOrder ? lastOrder.id + 1 : 1
         
         let data = await dbOrders.createOrder(order)
+        
+        // Send confirmation email to customer
+        try {
+            await emailService.sendOrderConfirmation(data, data.email, data.customerName || "לקוח");
+        } catch (emailError) {
+            console.error("Failed to send confirmation email:", emailError);
+            // Don't fail the order creation if email fails
+        }
         
         // החזר response
         res.status(200).json({

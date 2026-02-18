@@ -1,3 +1,4 @@
+require("dotenv").config()
 const myexpress = require("express")
 const cors = require("cors")
 const db  = require("./dal/db-accessor")
