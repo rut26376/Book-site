@@ -1,12 +1,25 @@
 services:
   - type: web
-    name: book-site-server
+    name: book-site
     env: node
+    region: frankfurt
     plan: free
-    buildCommand: "cd Client && npm install && npm run build && cd .."
-    startCommand: "cd Server && npm install && npm start"
+    buildCommand: "cd Client && npm install && npm run build && cd .. && cd Server && npm install"
+    startCommand: "cd Server && npm start"
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 5000
+      - key: MONGODB_URI
+        value: ${MONGODB_URI}
+      - key: EMAIL_USER
+        value: ${EMAIL_USER}
+      - key: EMAIL_PASSWORD
+        value: ${EMAIL_PASSWORD}
+      - key: ADMIN_EMAIL
+        value: ${ADMIN_EMAIL}
+      - key: STORE_PHONE
+        value: ${STORE_PHONE}
+      - key: STORE_EMAIL
+        value: ${STORE_EMAIL}
