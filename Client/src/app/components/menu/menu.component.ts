@@ -69,8 +69,7 @@ export class MenuComponent implements OnInit {
     const target = event.target as HTMLElement;
     const searchBox = document.querySelector('.search-box');
     const dropdown = document.querySelector('.search-results-dropdown');
-    const userProfileBtn = document.querySelector('.user-profile-btn');
-    const userDropdown = document.querySelector('.user-dropdown-menu');
+    const userProfileWrapper = document.querySelector('.user-profile-wrapper');
     
     // סגור חיפוש אם לחיצה מחוץ
     if (searchBox && !searchBox.contains(target) && 
@@ -79,8 +78,7 @@ export class MenuComponent implements OnInit {
     }
 
     // סגור dropdown של פרופיל אם לחיצה מחוץ
-    if (userProfileBtn && !userProfileBtn.contains(target) &&
-        userDropdown && !userDropdown.contains(target)) {
+    if (userProfileWrapper && !userProfileWrapper.contains(target)) {
       this.closeUserDropdown();
     }
   }
@@ -90,7 +88,7 @@ export class MenuComponent implements OnInit {
     this.categories = categoriesData.categories;
 
     // טעינת מספר הטלפון מה-JSON
-    this.http.get<any>('/assets/config/shipping.json').subscribe({
+    this.http.get<any>('/assets/config/generalData.json').subscribe({
       next: (config) => {
         this.storePhone = config.store.phone;
       },

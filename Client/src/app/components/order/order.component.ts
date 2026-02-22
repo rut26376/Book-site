@@ -57,7 +57,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     // Load shipping config from JSON
-    this.http.get<any>('/assets/config/shipping.json').subscribe(config => {
+    this.http.get<any>('/assets/config/generalData.json').subscribe(config => {
       this.shippingCost = config.shipping.cost;
       this.shippingDescription = config.shipping.description;
       this.shippingDetails = config.shipping.details;
@@ -193,7 +193,8 @@ export class OrderComponent implements OnInit {
       phone: this.customerInfo.phone,
       notes: this.customerInfo.notes
     };
-
+      console.log('Order object to be sent:', order);
+      
     // שליחת ההזמנה לשרת
     this.orderService.createOrder(order).subscribe({
       next: (response) => {
