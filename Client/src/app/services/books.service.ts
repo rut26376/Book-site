@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BooksService {
-  book_URL = 'http://localhost:5000/books';
+  book_URL = '/books';
   http = inject(HttpClient);
   books$ = this.getAllBooks();
   bookLst: Book[] = [];

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: book-site-server
+    env: node
+    plan: free
+    buildCommand: "cd Client && npm install && npm run build && cd .."
+    startCommand: "cd Server && npm install && npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
