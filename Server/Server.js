@@ -32,7 +32,7 @@ app.use("/auth", customerRouter)
 app.use("/orders", orderRouter)
 
 // Fallback to Angular index.html for client-side routing
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
