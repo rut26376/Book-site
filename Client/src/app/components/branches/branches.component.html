@@ -1,0 +1,43 @@
+<div class="branches-page">
+  <div class="branches-header">
+    <h1>סניפים שלנו</h1>
+    <p class="branches-subtitle">בחר סניף קרוב אליך</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>טוען נתונים...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-message" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Branches Grid -->
+  <div class="branches-grid" *ngIf="!isLoading && branches.length > 0">
+    <div class="branch-card" *ngFor="let branch of branches">
+      <div class="branch-header">
+        <h2 class="branch-name">{{ branch.name }}</h2>
+      </div>
+      
+      <div class="branch-content">
+        <div class="branch-info">
+          <div class="info-item">
+            <span class="info-text">{{ branch.address }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-text phone" (click)="callBranch(branch.phone)">{{ branch.phone }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && branches.length === 0">
+    <p>לא נמצאו סניפים</p>
+  </div>
+</div>
+

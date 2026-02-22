@@ -129,6 +129,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/category', category]);
   }
 
+  goToBranches() {
+    this.router.navigate(['/branches']);
+  }
+
   toggleUserDropdown() {
     this.showUserDropdown = !this.showUserDropdown;
   }
@@ -145,5 +149,9 @@ export class MenuComponent implements OnInit {
   logoutUser() {
     this.logout();
     this.showUserDropdown = false;
+  }
+    callBranch(phone: string) {
+    // ניסיון לפתוח את יישום הטלפון
+    window.location.href = `tel:${phone}`;
   }
 }

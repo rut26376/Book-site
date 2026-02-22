@@ -32,7 +32,10 @@
   align-items: center;
   gap: 6px;
 }
-
+.logo:hover {
+  cursor: pointer;
+  color: #5d4837;
+}
 .cart-btn {
   background: none;
   border: none;
