@@ -34,6 +34,7 @@ export class MenuComponent implements OnInit {
   currentUser: Customer | null = null;
   storePhone: string = '029999999';
   cartItemCount: number = 0;
+  showUserDropdown: boolean = false;
   search(query: string) {
     if (!query || query.trim() === '') {
       this.searchBooks = [];
@@ -68,10 +69,19 @@ export class MenuComponent implements OnInit {
     const target = event.target as HTMLElement;
     const searchBox = document.querySelector('.search-box');
     const dropdown = document.querySelector('.search-results-dropdown');
+    const userProfileBtn = document.querySelector('.user-profile-btn');
+    const userDropdown = document.querySelector('.user-dropdown-menu');
     
+    // סגור חיפוש אם לחיצה מחוץ
     if (searchBox && !searchBox.contains(target) && 
         dropdown && !dropdown.contains(target)) {
       this.closeDropdown();
+    }
+
+    // סגור dropdown של פרופיל אם לחיצה מחוץ
+    if (userProfileBtn && !userProfileBtn.contains(target) &&
+        userDropdown && !userDropdown.contains(target)) {
+      this.closeUserDropdown();
     }
   }
 
@@ -119,5 +129,23 @@ export class MenuComponent implements OnInit {
 
   filterByCategory(category: string) {
     this.router.navigate(['/category', category]);
+  }
+
+  toggleUserDropdown() {
+    this.showUserDropdown = !this.showUserDropdown;
+  }
+
+  closeUserDropdown() {
+    this.showUserDropdown = false;
+  }
+
+  goToEditProfile() {
+    this.showUserDropdown = false;
+    this.router.navigate(['/edit-profile']);
+  }
+
+  logoutUser() {
+    this.logout();
+    this.showUserDropdown = false;
   }
 }

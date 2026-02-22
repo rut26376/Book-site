@@ -1,0 +1,142 @@
+.user-profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon-wrapper {
+    position: relative;
+}
+
+.user-icon-btn {
+    width: 55px;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    position: relative;
+}
+
+.user-icon-btn:hover {
+    background-color: rgba(74, 55, 40, 0.1);
+    transform: scale(1.1);
+}
+
+.user-icon-btn:active {
+    background-color: rgba(74, 55, 40, 0.15);
+}
+
+.user-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Dropdown Menu */
+.user-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #dcc9b6;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(74, 55, 40, 0.15);
+    min-width: 220px;
+    z-index: 1000;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-header {
+    padding: 12px 15px;
+    text-align: right;
+    border-bottom: 1px solid #f0e8e0;
+}
+
+.user-fullname {
+    display: block;
+    font-weight: bold;
+    color: #4a3728;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.user-email {
+    display: block;
+    color: #999;
+    font-size: 11px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #f0e8e0;
+}
+
+.dropdown-item {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    text-align: right;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    color: #4a3728;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f9f7f3;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: #f9f7f3;
+}
+
+.dropdown-item.logout-btn:hover {
+    color: #d32f2f;
+    background-color: #ffebee;
+}
+
+.item-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .user-dropdown {
+        min-width: 200px;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+}

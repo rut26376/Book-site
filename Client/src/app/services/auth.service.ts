@@ -98,6 +98,29 @@ export class AuthService {
     return this.currentUser.value;
   }
 
+  updateCurrentUser(user: Customer) {
+    this.currentUser.next(user);
+    this.saveToStorage(this.token.value || '', user);
+  }
+
+  updateUserProfile(user: Customer): Observable<any> {
+    return new Observable(observer => {
+      this.http.put(`${this.apiUrl}/update-profile`, user).subscribe({
+        next: (response: any) => {
+          if (response.success) {
+            this.currentUser.next(response.user);
+            this.saveToStorage(this.token.value || '', response.user);
+          }
+          observer.next(response);
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
+  }
+
   getToken(): string | null {
     return this.token.value;
   }

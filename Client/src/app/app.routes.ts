@@ -3,6 +3,7 @@ import { DisplayBookComponent } from './components/display-book/display-book.com
 import { CategoryBookComponent } from './components/category-book/category-book.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,4 +12,5 @@ export const routes: Routes = [
     { path: 'category/:name', component: CategoryBookComponent},
     { path: 'cart', component: CartComponent },
     { path: 'order', component: OrderComponent },
+    { path: 'edit-profile', component: EditProfileComponent },
 ];

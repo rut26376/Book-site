@@ -10,15 +10,29 @@
       <button class="cart-btn" title="סניפים">
         <img src="/assets/general/store.png" alt="Stores" class="cart-icon">
       </button>
-      <!-- Auth Buttons / User Profile -->
+      <!-- User Profile / Auth Buttons -->
       <div class="auth-section">
         <div *ngIf="!currentUser" class="auth-buttons">
           <button class="auth-btn login-btn" (click)="openLoginModal()">התחברות</button>
           <button class="auth-btn register-btn" (click)="openRegisterModal()">הרשמה</button>
         </div>
-        <div *ngIf="currentUser" class="user-profile">
-          <span class="user-name">{{ currentUser.fullName }}</span>
-          <button class="logout-btn" (click)="logout()">התנתקות</button>
+        <div *ngIf="currentUser" class="user-profile-wrapper">
+          <button class="cart-btn" (click)="toggleUserDropdown()" title="פרטי חשבון">
+            <img src="/assets/general/profile-user.png" alt="Profile" class="cart-icon">
+          </button>
+          <div class="user-dropdown-menu" *ngIf="showUserDropdown">
+            <div class="dropdown-user-header">
+              <span class="dropdown-user-name">{{ currentUser.fullName }}</span>
+              <span class="dropdown-user-email">{{ currentUser.email }}</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-user-item" (click)="goToEditProfile()">
+              עריכת פרטים
+            </button>
+            <button class="dropdown-user-item logout-item" (click)="logoutUser()">
+              התנתקות
+            </button>
+          </div>
         </div>
       </div>
     </div>

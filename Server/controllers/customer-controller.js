@@ -119,6 +119,47 @@ getNextCustomerId = async(req, res)=>{
         })
     }
 }
+
+updateCustomerProfile = async(req, res)=>{
+    try {
+        const { id, fullName, email, phone, city, street, houseNumber } = req.body
+        
+        // בדוק אם לקוח קיים
+        let customer = await dbCustomers.findCustomerById(id)
+        if(!customer) {
+            return res.status(404).json({ success: false, message: "לקוח לא נמצא" })
+        }
+        
+        // עדכן את הנתונים
+        customer.fullName = fullName || customer.fullName
+        customer.email = email || customer.email
+        customer.phone = phone || customer.phone
+        customer.city = city || customer.city
+        customer.street = street || customer.street
+        customer.houseNumber = houseNumber || customer.houseNumber
+        
+        // שמור את העדכונים ל-DB
+        let updatedCustomer = await dbCustomers.updateCustomer(id, customer)
+        
+        // החזר response
+        res.status(200).json({
+            success: true,
+            message: "הפרטים עודכנו בהצלחה",
+            user: {
+                id: updatedCustomer.id,
+                fullName: updatedCustomer.fullName,
+                email: updatedCustomer.email,
+                phone: updatedCustomer.phone,
+                city: updatedCustomer.city,
+                street: updatedCustomer.street,
+                houseNumber: updatedCustomer.houseNumber
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "שגיאה בעדכון הפרטים" })
+    }
+}
 }
 module.exports = customerController;
 

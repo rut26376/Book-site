@@ -19,9 +19,9 @@ const init = async()=>{
 init()
 
 const hostname="localhost"
-const port = 5000
-app.listen(port, hostname, ()=>{
-    console.log(`Server running at ${hostname}:${port}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, hostname, ()=>{
+    console.log(`Server running at ${hostname}:${PORT}`);
 })
 
 app.use("/books", bookRouter)

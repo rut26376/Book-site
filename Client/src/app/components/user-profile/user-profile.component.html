@@ -1,0 +1,27 @@
+<div class="user-profile-container">
+  <!-- User Icon / Dropdown Toggle -->
+  <div class="user-icon-wrapper">
+    <button class="user-icon-btn" (click)="toggleDropdown()" title="פרטי חשבון">
+      <img src="/assets/general/profile-user.png" alt="Profile" class="user-icon">
+    </button>
+    
+    <!-- Dropdown Menu -->
+    <div class="user-dropdown" *ngIf="showDropdown">
+      <div class="dropdown-header">
+        <span class="user-fullname">{{ currentUser?.fullName }}</span>
+        <span class="user-email">{{ currentUser?.email }}</span>
+      </div>
+      
+      <div class="dropdown-divider"></div>
+      
+      <button class="dropdown-item edit-btn" (click)="startEditing()">
+        עריכת פרטים
+      </button>
+      
+      <button class="dropdown-item logout-btn" (click)="logout()">
+        התנתקות
+      </button>
+    </div>
+  </div>
+</div>
+
