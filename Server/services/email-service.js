@@ -1,14 +1,19 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns').promises;
+
+// Force IPv4 DNS resolution
+dns.setDefaultResultOrder('ipv4first');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false, // Use STARTTLS instead of TLS
-    family: 4, // Force IPv4 (Render has IPv6 issues)
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD.replace(/\s/g, '')
-    }
+    },
+    logger: true,
+    debug: true
 });
 
 // מייל ללקוח
