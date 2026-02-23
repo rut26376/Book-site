@@ -16,8 +16,12 @@ const transporter = nodemailer.createTransport({
     debug: true
 });
 
+// ===== אם Nodemailer לא עובד (Render blocking SMTP), החלף בקטע זה: =====
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+// ===== סוף SendGrid configuration =====
+
 // מייל ללקוח
-const sendOrderConfirmation = async (order, customerName, customerEmail) => {
     const itemsHTML = order.items.map(item => `
         <tr style="border-bottom: 1px solid #e0d5c7;">
             <td style="padding: 12px; text-align: right; font-size: 14px;">
@@ -306,13 +310,25 @@ const sendOrderConfirmation = async (order, customerName, customerEmail) => {
     `;
 
     try {
+        // ===== OPTION 1: Nodemailer (Gmail - Original) =====
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: customerEmail,
             subject: `✅ הזמנה אושרה - הזמנה מספר #${order.id}`,
             html: htmlContent
         });
-        console.log('מייל אישור הזמנה נשלח בהצלחה ל:', customerEmail);
+        console.log('✅ מייל אישור הזמנה נשלח בהצלחה ל:', customerEmail);
+        // ===== סוף Nodemailer option =====
+
+        // ===== OPTION 2: SendGrid (Uncomment below if Render blocks SMTP) =====
+        // await sgMail.send({
+        //     to: customerEmail,
+        //     from: process.env.STORE_EMAIL,
+        //     subject: `✅ הזמנה אושרה - הזמנה מספר #${order.id}`,
+        //     html: htmlContent
+        // });
+        // console.log('✅ מייל אישור הזמנה נשלח בהצלחה ל:', customerEmail);
+        // ===== סוף SendGrid option =====
     } catch (error) {
         console.error('שגיאה בשליחת מייל אישור הזמנה:', error.message);
         throw error;
@@ -602,13 +618,25 @@ const sendAdminNotification = async (order, customerName, customerEmail) => {
     `;
 
     try {
+        // ===== OPTION 1: Nodemailer (Gmail - Original) =====
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: process.env.ADMIN_EMAIL,
             subject: `📋 הזמנה חדשה מספר #${order.id} - ${customerName}`,
             html: adminHtmlContent
         });
-        console.log('מייל הודעה למנהל נשלח בהצלחה');
+        console.log('✅ מייל הודעה למנהל נשלח בהצלחה');
+        // ===== סוף Nodemailer option =====
+
+        // ===== OPTION 2: SendGrid (Uncomment below if Render blocks SMTP) =====
+        // await sgMail.send({
+        //     to: process.env.ADMIN_EMAIL,
+        //     from: process.env.STORE_EMAIL,
+        //     subject: `📋 הזמנה חדשה מספר #${order.id} - ${customerName}`,
+        //     html: adminHtmlContent
+        // });
+        // console.log('✅ מייל הודעה למנהל נשלח בהצלחה');
+        // ===== סוף SendGrid option =====
     } catch (error) {
         console.error('שגיאה בשליחת מייל למנהל:', error.message);
         throw error;
