@@ -8,7 +8,7 @@ import { Order } from '../models/order.model';
 })
 export class OrderService {
   private http = inject(HttpClient);
-  private apiUrl = '/orders';
+  private apiUrl = 'http://localhost:5000/orders';
 
   constructor() { }
   createOrder(order: Order): Observable<any> {

@@ -1,27 +1,14 @@
 const nodemailer = require('nodemailer');
-const dns = require('dns').promises;
-const sgMail = require('@sendgrid/mail');
-
-// Force IPv4 DNS resolution
-dns.setDefaultResultOrder('ipv4first');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
-    secure: false, // Use STARTTLS instead of TLS
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD.replace(/\s/g, '')
-    },
-    logger: true,
-    debug: true
+    }
 });
-
-// Set SendGrid API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
-
-// ===== בשימוש כרגע: SendGrid (עובד עם Render) =====
-// ===== ישן: Nodemailer (לבדיקה מקומית בלבד) =====
 
 // מייל ללקוח
 const sendOrderConfirmation = async (order, customerName, customerEmail) => {
@@ -313,25 +300,13 @@ const sendOrderConfirmation = async (order, customerName, customerEmail) => {
     `;
 
     try {
-        // ===== בשימוש כרגע: SendGrid (עובד עם Render) =====
-        await sgMail.send({
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
             to: customerEmail,
-            from: process.env.STORE_EMAIL,
             subject: `✅ הזמנה אושרה - הזמנה מספר #${order.id}`,
             html: htmlContent
         });
         console.log('✅ מייל אישור הזמנה נשלח בהצלחה ל:', customerEmail);
-        // ===== סוף SendGrid =====
-
-        // ===== ישן: Nodemailer (לבדיקה מקומית בלבד) =====
-        // await transporter.sendMail({
-        //     from: process.env.EMAIL_USER,
-        //     to: customerEmail,
-        //     subject: `✅ הזמנה אושרה - הזמנה מספר #${order.id}`,
-        //     html: htmlContent
-        // });
-        // console.log('✅ מייל אישור הזמנה נשלח בהצלחה ל:', customerEmail);
-        // ===== סוף Nodemailer =====
     } catch (error) {
         console.error('שגיאה בשליחת מייל אישור הזמנה:', error.message);
         throw error;
@@ -621,25 +596,13 @@ const sendAdminNotification = async (order, customerName, customerEmail) => {
     `;
 
     try {
-        // ===== בשימוש כרגע: SendGrid (עובד עם Render) =====
-        await sgMail.send({
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
             to: process.env.ADMIN_EMAIL,
-            from: process.env.STORE_EMAIL,
             subject: `📋 הזמנה חדשה מספר #${order.id} - ${customerName}`,
             html: adminHtmlContent
         });
         console.log('✅ מייל הודעה למנהל נשלח בהצלחה');
-        // ===== סוף SendGrid =====
-
-        // ===== ישן: Nodemailer (לבדיקה מקומית בלבד) =====
-        // await transporter.sendMail({
-        //     from: process.env.EMAIL_USER,
-        //     to: process.env.ADMIN_EMAIL,
-        //     subject: `📋 הזמנה חדשה מספר #${order.id} - ${customerName}`,
-        //     html: adminHtmlContent
-        // });
-        // console.log('✅ מייל הודעה למנהל נשלח בהצלחה');
-        // ===== סוף Nodemailer =====
     } catch (error) {
         console.error('שגיאה בשליחת מייל למנהל:', error.message);
         throw error;
