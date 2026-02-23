@@ -30,7 +30,23 @@ const PORT = process.env.PORT || 5000;
 
 // Serve static files from Angular build
 const clientBuildPath = path.join(__dirname, '../Client/dist/book-site/browser');
+console.log(`📁 __dirname: ${__dirname}`);
 console.log(`📁 Looking for static files at: ${clientBuildPath}`);
+
+// Check if directory exists
+const fs = require('fs');
+if (fs.existsSync(clientBuildPath)) {
+  console.log(`✅ Directory exists!`);
+  const indexPath = path.join(clientBuildPath, 'index.html');
+  console.log(`📄 index.html path: ${indexPath}`);
+  console.log(`📄 index.html exists: ${fs.existsSync(indexPath)}`);
+} else {
+  console.log(`❌ Directory does NOT exist! Checking parent...`);
+  const parentPath = path.join(__dirname, '..');
+  console.log(`📁 Parent directory: ${parentPath}`);
+  console.log(`📁 Contents:`, fs.readdirSync(parentPath));
+}
+
 app.use(myexpress.static(clientBuildPath));
 
 // API routes
