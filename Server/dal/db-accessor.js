@@ -10,7 +10,7 @@ connectDB.connect = async()=>{
         await mymongo.connect(mongoUri)
         console.log("✅ Connection successfully to mongoDB");
     } catch (error) {
-        console.error("❌ Moxxxxxxxxxxxction Error:", error.message);
+        console.error("❌ MongoDB Connection Error:", error.message);
         throw error;
     }
 }
