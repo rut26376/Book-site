@@ -5,20 +5,21 @@ class dbaccessorBooks{
 
 addBook = async(book)=>{
     try {
-        await books.create(book)
-        this.getAll();
+        const newBook = await books.create(book)
+        return newBook;
     } catch (error) {
-        throw console.error(error)
+        console.error("Error adding book:", error);
+        throw error;
     }
 }
-
 
 getAll = async()=>{
     try {
         const allBooks = await books.find({})
         return allBooks;
     } catch (error) {
-        throw console.error(error)
+        console.error("Error getting books:", error);
+        throw error;
     }
 
 }

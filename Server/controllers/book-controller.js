@@ -13,7 +13,8 @@ newBook = async(req, res)=>{
         let data = await dbBooks.addBook(book)
         res.status(200).json(data)
      } catch (error) {
-        throw console.log(error)
+        console.error("Error in newBook:", error.message);
+        res.status(500).json({ error: "Failed to add book" });
     }
 }
 
@@ -22,7 +23,8 @@ newBook = async(req, res)=>{
         let list = await dbBooks.getAll()
         res.status(200).json(list)
     } catch (error) {
-        throw console.log(error)
+        console.error("Error in getAll:", error.message);
+        res.status(500).json({ error: "Failed to get books" });
     }
 }
 }
