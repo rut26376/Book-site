@@ -1,16 +1,17 @@
 const mymongo = require("mongoose")
 
-const url = "mongodb://localhost:27017"
-const dbName = "Books"
-
 const connectDB = {}
 
 connectDB.connect = async()=>{
     try {
-        await mymongo.connect(`${url}/${dbName}`)
-        console.log("Connection successfully to mongoDB");
+        // Use MongoDB Atlas URI from environment variable for production, or local for development
+        const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/Books"
+        console.log(`🔗 Connecting to MongoDB: ${mongoUri.substring(0, 50)}...`)
+        await mymongo.connect(mongoUri)
+        console.log("✅ Connection successfully to mongoDB");
     } catch (error) {
-        console.log(error);
+        console.error("❌ Moxxxxxxxxxxxction Error:", error.message);
+        throw error;
     }
 }
 
