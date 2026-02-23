@@ -14,7 +14,13 @@ app.use(myexpress.json())
 
 // חיבור ל DB
 const init = async () => {
-    await db.connect()
+    try {
+        await db.connect()
+        console.log("✅ Connected to MongoDB successfully");
+    } catch (error) {
+        console.error("❌ MongoDB Connection Error:", error.message);
+        process.exit(1);
+    }
 }
 
 init()
@@ -24,6 +30,7 @@ const PORT = process.env.PORT || 5000;
 
 // Serve static files from Angular build
 const clientBuildPath = path.join(__dirname, '../Client/dist/book-site/browser');
+console.log(`📁 Looking for static files at: ${clientBuildPath}`);
 app.use(myexpress.static(clientBuildPath));
 
 // API routes
