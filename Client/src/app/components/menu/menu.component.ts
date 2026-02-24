@@ -150,7 +150,13 @@ export class MenuComponent implements OnInit {
     this.logout();
     this.showUserDropdown = false;
   }
-    callBranch(phone: string) {
+
+  goToAdmin() {
+    this.showUserDropdown = false;
+    this.router.navigate(['/admin']);
+  }
+
+  callBranch(phone: string) {
     // ניסיון לפתוח את יישום הטלפון
     window.location.href = `tel:${phone}`;
   }

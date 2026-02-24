@@ -32,7 +32,7 @@ registerCustomer = async(req, res)=>{
         
         // Generate JWT token
         const token = jwt.sign(
-            { id: data.id, email: data.email },
+            { id: data.id, email: data.email, role: data.role || 'user' },
             SECRET_KEY,
             { expiresIn: "7d" }
         )
@@ -48,7 +48,8 @@ registerCustomer = async(req, res)=>{
                 phone: data.phone,
                 city: data.city,
                 street: data.street,
-                houseNumber: data.houseNumber
+                houseNumber: data.houseNumber,
+                role: data.role || 'user'
             }
         })
     } catch (error) {
@@ -75,7 +76,7 @@ loginCustomer = async(req, res)=>{
         
         // Generate JWT token
         const token = jwt.sign(
-            { id: customer.id, email: customer.email },
+            { id: customer.id, email: customer.email, role: customer.role || 'user' },
             SECRET_KEY,
             { expiresIn: "7d" }
         )
@@ -91,7 +92,8 @@ loginCustomer = async(req, res)=>{
                 phone: customer.phone,
                 city: customer.city,
                 street: customer.street,
-                houseNumber: customer.houseNumber
+                houseNumber: customer.houseNumber,
+                role: customer.role || 'user'
             }
         })
     } catch (error) {

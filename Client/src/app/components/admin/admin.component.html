@@ -1,0 +1,191 @@
+<div class="admin-container">
+  <!-- Header -->
+  <div class="admin-header">
+    <h1>🔧 ממשק ניהול</h1>
+    <div class="header-info">
+      <span>שלום, {{ currentUser?.fullName }}</span>
+      <button class="btn-back" (click)="goHome()" title="חזור לעמוד הבית">
+        ← חזור לעמוד הבית
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="admin-tabs">
+    <button 
+      [class.active]="activeTab === 'books'"
+      (click)="activeTab = 'books'"
+      class="tab-btn">
+      📚 ניהול ספרים
+    </button>
+    <button 
+      [class.active]="activeTab === 'orders'"
+      (click)="activeTab = 'orders'"
+      class="tab-btn">
+      📦 הזמנות
+    </button>
+  </div>
+
+  <!-- Books Tab -->
+  <div *ngIf="activeTab === 'books'" class="tab-content">
+    <!-- Add New Book Form -->
+    <div class="add-book-section">
+      <h2>הוסף ספר חדש</h2>
+      <div class="form-grid">
+        <input 
+          [(ngModel)]="newBook.bookName" 
+          placeholder="שם הספר"
+          class="form-input">
+        
+        <input 
+          [(ngModel)]="newBook.author" 
+          placeholder="מחבר"
+          class="form-input">
+        
+        <input 
+          [(ngModel)]="newBook.price" 
+          type="number" 
+          placeholder="מחיר"
+          class="form-input">
+        
+        <input 
+          [(ngModel)]="newBook.size" 
+          placeholder="גודל (כגון: 400 עמודים)"
+          class="form-input">
+        
+        <!-- File Upload for Image -->
+        <div class="file-upload-wrapper">
+          <label for="bookImage" class="file-upload-label">
+            📷 בחר תמונה לספר
+          </label>
+          <input 
+            #fileInput
+            type="file" 
+            id="bookImage"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+            class="file-input">
+          <div class="file-preview" *ngIf="newBook.picture">
+            <img [src]="'assets/book-img/' + newBook.picture" alt="Preview" class="preview-img">
+            <p class="file-name">{{ newBook.picture }}</p>
+          </div>
+        </div>
+        
+        <textarea 
+          [(ngModel)]="newBook.description" 
+          placeholder="תיאור הספר"
+          class="form-textarea"></textarea>
+      </div>
+
+      <!-- Categories Selection -->
+      <div class="categories-section">
+        <h3>בחר קטגוריות:</h3>
+        
+        <!-- Main Category -->
+        <div class="form-group">
+          <label>קטגוריה ראשית:</label>
+          <select 
+            [(ngModel)]="selectedMainCategory" 
+            (change)="onMainCategoryChange()"
+            class="form-select">
+            <option value="">בחר קטגוריה...</option>
+            <option *ngFor="let cat of categories" [value]="cat.main">
+              {{ cat.main }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Sub Categories -->
+        <div class="form-group" *ngIf="selectedMainCategory">
+          <label>קטגוריות משניות (בחר מרוב):</label>
+          <div class="sub-categories-list">
+            <button 
+              *ngFor="let sub of availableSubCategories"
+              [class.active]="selectedSubCategories.includes(sub)"
+              (click)="addSubCategory(sub)"
+              type="button"
+              class="category-btn-select">
+              {{ sub }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Selected Categories Display -->
+        <div class="selected-categories" *ngIf="newBook.category.length > 0">
+          <h4>קטגוריות שנבחרו:</h4>
+          <div class="category-chips">
+            <div 
+              *ngFor="let cat of newBook.category" 
+              class="category-chip">
+              {{ cat.main }} / {{ cat.sub }}
+              <button 
+                (click)="removeSubCategory(cat.sub)"
+                type="button"
+                class="chip-remove">×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button (click)="addNewBook()" class="btn-add">
+        ➕ הוסף ספר
+      </button>
+    </div>
+
+    <!-- Books List -->
+    <div class="books-list-section">
+      <h2>ספרים קיימים ({{ books.length }})</h2>
+      <div class="books-grid">
+        <div *ngFor="let book of books" class="book-item">
+          <div class="book-cover">
+            <img *ngIf="book.picture" [src]="book.picture" [alt]="book.bookName">
+            <div *ngIf="!book.picture" class="no-image">אין תמונה</div>
+          </div>
+          <div class="book-details">
+            <h3>{{ book.bookName }}</h3>
+            <p class="author">{{ book.author }}</p>
+            <p class="price">₪{{ book.price }}</p>
+            <div class="categories">
+              <span class="category-tag">{{ book.category?.main }}</span>
+              <span class="category-tag">{{ book.category?.sub }}</span>
+            </div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-edit">✏️ עריכה</button>
+            <button (click)="deleteBook(book.id)" class="btn-delete">🗑️ מחיקה</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Tab -->
+  <div *ngIf="activeTab === 'orders'" class="tab-content">
+    <h2>הזמנות ({{ orders.length }})</h2>
+    <div class="orders-list">
+      <p *ngIf="orders.length === 0" class="no-data">אין הזמנות עדיין</p>
+      <div *ngFor="let order of orders" class="order-item">
+        <div class="order-header">
+          <span class="order-id">#{{ order.id }}</span>
+          <span class="order-date">{{ order.date | date:'dd/MM/yyyy' }}</span>
+          <span class="order-status" [class]="'status-' + order.status">{{ order.status }}</span>
+        </div>
+        <div class="order-details">
+          <p><strong>לקוח:</strong> {{ order.fullName }}</p>
+          <p><strong>אימייל:</strong> {{ order.email }}</p>
+          <p><strong>טלפון:</strong> {{ order.phone }}</p>
+          <p><strong>כתובת:</strong> {{ order.street }} {{ order.houseNumber }}, {{ order.city }}</p>
+          <p><strong>סכום כולל:</strong> ₪{{ order.totalAmount }}</p>
+        </div>
+        <div class="order-items">
+          <h4>פריטים בהזמנה:</h4>
+          <ul>
+            <li *ngFor="let item of order.items">
+              {{ item.bookName }} x{{ item.quantity }} = ₪{{ item.price * item.quantity }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

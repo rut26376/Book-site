@@ -29,6 +29,9 @@
             <button class="dropdown-user-item" (click)="goToEditProfile()">
               עריכת פרטים
             </button>
+            <button *ngIf="currentUser.role === 'admin'" class="dropdown-user-item admin-item" (click)="goToAdmin()">
+              🔧 ממשק ניהול
+            </button>
             <button class="dropdown-user-item logout-item" (click)="logoutUser()">
               התנתקות
             </button>

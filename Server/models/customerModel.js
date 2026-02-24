@@ -11,7 +11,12 @@ const customerScheme = new mymongo.Schema(
         street: String,
         houseNumber: String,
         city: String,
-        email: String
+        email: String,
+        role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user'
+        }
     }
 )
 

@@ -8,4 +8,5 @@ export class Customer {
   houseNumber!: string;
   city!: string;
   email!: string;
+  role?: 'user' | 'admin'; // role של המשתמש
 }

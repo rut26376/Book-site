@@ -11,10 +11,12 @@ const bookScheme = new mymongo.Schema(
         price: Number,
         size: String,
         picture: String,
-        category: {
-            main: String,    // קטגוריה ראשית
-            sub: String      // קטגוריה משנית
-        }
+        category: [
+            {
+                main: String,    // קטגוריה ראשית
+                sub: String      // קטגוריה משנית
+            }
+        ]
     }
 )
 

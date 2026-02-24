@@ -5,6 +5,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { BranchesComponent } from './components/branches/branches.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,4 +17,5 @@ export const routes: Routes = [
     { path: 'order', component: OrderComponent },
     { path: 'edit-profile', component: EditProfileComponent },
     { path: 'branches', component: BranchesComponent },
+    { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
 ];
