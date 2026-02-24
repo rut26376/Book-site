@@ -17,20 +17,20 @@ createOrder = async(req, res)=>{
         let data = await dbOrders.createOrder(order)
         
         // Send confirmation email to customer
-        try {
-            await sendOrderConfirmation(data, data.fullName || "לקוח", data.email);
-        } catch (emailError) {
-            console.error("Failed to send confirmation email:", emailError);
-            // Don't fail the order creation if email fails
-        }
+        // try {
+        //     await sendOrderConfirmation(data, data.fullName || "לקוח", data.email);
+        // } catch (emailError) {
+        //     console.error("Failed to send confirmation email:", emailError);
+        //     // Don't fail the order creation if email fails
+        // }
 
-        // Send notification email to admin
-        try {
-            await sendAdminNotification(data, data.fullName || "לקוח", data.email);
-        } catch (emailError) {
-            console.error("Failed to send admin notification email:", emailError);
-            // Don't fail the order creation if email fails
-        }
+        // // Send notification email to admin
+        // try {
+        //     await sendAdminNotification(data, data.fullName || "לקוח", data.email);
+        // } catch (emailError) {
+        //     console.error("Failed to send admin notification email:", emailError);
+        //     // Don't fail the order creation if email fails
+        // }
         
         // החזר response
         res.status(200).json({
