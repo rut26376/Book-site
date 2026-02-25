@@ -8,7 +8,6 @@ const uploadDir = path.join(__dirname, '../../Client/src/assets/book-img');
 // Ensure upload directory exists
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-  console.log(`📁 Upload directory created: ${uploadDir}`);
 }
 
 // Storage configuration

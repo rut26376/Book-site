@@ -6,12 +6,13 @@ import { AuthService } from '../../services/auth.service';
 import { BooksService } from '../../services/books.service';
 import { OrderService } from '../../services/order.service';
 import { UploadService } from '../../services/upload.service';
+import { BooksComponent } from './books/books.component';
 import categoriesData from '../../data/categories.json';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BooksComponent],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
@@ -42,23 +43,10 @@ export class AdminComponent {
     category: [] as any[]
   };
 
-  books: any[] = [];
   orders: any[] = [];
-  allBooks: any[] = [];
 
   ngOnInit() {
-    this.loadBooks();
     this.loadOrders();
-  }
-
-  loadBooks() {
-    this.booksService.getAllBooks().subscribe({
-      next: (response: any) => {
-        this.books = response;
-        this.allBooks = response;
-      },
-      error: (err: any) => console.error('Error loading books:', err)
-    });
   }
 
   loadOrders() {
@@ -176,7 +164,7 @@ export class AdminComponent {
    */
   private saveBookToDatabase(pictureFilename: string) {
     const bookWithId: any = {
-      id: Math.max(...this.books.map(b => b.id || 0), 0) + 1,
+      id: Date.now(), // השתמש בtimestamp כ-ID ייחודי
       bookName: this.newBook.bookName,
       author: this.newBook.author,
       description: this.newBook.description,
@@ -189,7 +177,6 @@ export class AdminComponent {
     this.booksService.addBook(bookWithId).subscribe({
       next: (response: any) => {
         alert('הספר נוסף בהצלחה!');
-        this.loadBooks();
         this.resetForm();
       },
       error: (err: any) => {

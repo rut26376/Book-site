@@ -1,0 +1,104 @@
+<div class="books-management">
+  <h2>ניהול ספרים</h2>
+
+  <!-- סינון -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <label for="search">חיפוש:</label>
+      <input 
+        id="search"
+        type="text" 
+        placeholder="חיפוש לפי שם ספר או מחבר..." 
+        [(ngModel)]="searchQuery"
+        (input)="filterBooks()"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="author-filter">מחבר:</label>
+      <select id="author-filter" [(ngModel)]="filterAuthor" (change)="filterBooks()">
+        <option value="">הכל</option>
+        <option *ngFor="let author of uniqueAuthors" [value]="author">{{ author }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="category-filter">קטגוריה:</label>
+      <select id="category-filter" [(ngModel)]="filterCategory" (change)="filterBooks()">
+        <option value="">הכל</option>
+        <option *ngFor="let category of uniqueCategories" [value]="category">{{ category }}</option>
+      </select>
+    </div>
+
+    <button class="btn-clear" (click)="searchQuery = ''; filterAuthor = ''; filterCategory = ''; filterBooks()">
+      🔄 ניקוי סינונים
+    </button>
+  </div>
+
+  <!-- טבלת הספרים -->
+  <div class="books-table-wrapper">
+    <table class="books-table">
+      <thead>
+        <tr>
+          <th>שם הספר</th>
+          <th>מחבר</th>
+          <th>מחיר</th>
+          <th>גודל</th>
+          <th>קטגוריות</th>
+          <th>תמונה</th>
+          <th>פעולות</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.bookName }}</td>
+          <td>{{ book.author }}</td>
+          <td class="price">₪{{ book.price }}</td>
+          <td>{{ book.size || '-' }}</td>
+          <td class="categories">
+            <span *ngFor="let cat of book.category" class="category-badge">
+              {{ cat.sub || cat.main }}
+            </span>
+          </td>
+          <td class="image-cell">
+            <button 
+              *ngIf="book.picture" 
+              class="btn-view-image" 
+              (click)="viewImage(book)"
+              title="הצג תמונה"
+            >
+              🖼️ צפייה
+            </button>
+            <span *ngIf="!book.picture" class="no-image">אין תמונה</span>
+          </td>
+          <td class="actions">
+            <button class="btn-edit" (click)="editBook(book)" title="עריכה">✏️</button>
+            <button class="btn-delete" (click)="deleteBook(book.id)" title="מחיקה">🗑️</button>
+          </td>
+        </tr>
+        <tr *ngIf="books.length === 0">
+          <td colspan="7" class="no-results">אין ספרים המתאימים לסינון</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- מודל להצגת תמונה בגדול -->
+  <div *ngIf="showImageModal" class="image-modal-overlay" (click)="closeImageModal()">
+    <div class="image-modal-content" (click)="$event.stopPropagation()">
+      <div class="image-modal-header">
+        <h3>{{ selectedImageBook?.bookName }}</h3>
+        <button class="btn-close" (click)="closeImageModal()">✕</button>
+      </div>
+      <div class="image-modal-body">
+        <img 
+          *ngIf="selectedImageBook?.picture" 
+          [src]="'/assets/book-img/' + selectedImageBook.picture" 
+          [alt]="selectedImageBook?.bookName"
+        />
+        <p *ngIf="!selectedImageBook?.picture">אין תמונה להצגה</p>
+      </div>
+    </div>
+  </div>
+</div>
+

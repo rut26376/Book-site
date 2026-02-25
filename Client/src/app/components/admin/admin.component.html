@@ -132,31 +132,8 @@
       </button>
     </div>
 
-    <!-- Books List -->
-    <div class="books-list-section">
-      <h2>ספרים קיימים ({{ books.length }})</h2>
-      <div class="books-grid">
-        <div *ngFor="let book of books" class="book-item">
-          <div class="book-cover">
-            <img *ngIf="book.picture" [src]="book.picture" [alt]="book.bookName">
-            <div *ngIf="!book.picture" class="no-image">אין תמונה</div>
-          </div>
-          <div class="book-details">
-            <h3>{{ book.bookName }}</h3>
-            <p class="author">{{ book.author }}</p>
-            <p class="price">₪{{ book.price }}</p>
-            <div class="categories">
-              <span class="category-tag">{{ book.category?.main }}</span>
-              <span class="category-tag">{{ book.category?.sub }}</span>
-            </div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-edit">✏️ עריכה</button>
-            <button (click)="deleteBook(book.id)" class="btn-delete">🗑️ מחיקה</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Books List Component -->
+    <app-books></app-books>
   </div>
 
   <!-- Orders Tab -->

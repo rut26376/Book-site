@@ -25,8 +25,6 @@ exports.uploadImage = (req, res) => {
       size: req.file.size,
       mimeType: req.file.mimetype
     });
-
-    console.log(`✅ Image saved: ${req.file.filename} (${req.file.size} bytes)`);
   } catch (error) {
     console.error('❌ Upload controller error:', error);
     res.status(500).json({
@@ -61,8 +59,6 @@ exports.uploadMultipleImages = (req, res) => {
       files: uploadedFiles,
       count: req.files.length
     });
-
-    console.log(`✅ ${req.files.length} images saved`);
   } catch (error) {
     console.error('❌ Multiple upload controller error:', error);
     res.status(500).json({

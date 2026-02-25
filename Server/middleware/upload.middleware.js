@@ -23,7 +23,6 @@ const uploadSingleImage = (req, res, next) => {
       });
     }
 
-    console.log(`✅ File received: ${req.file.filename}`);
     next();
   });
 };
@@ -51,7 +50,6 @@ const uploadMultipleImages = (req, res, next) => {
       });
     }
 
-    console.log(`✅ Files received: ${req.files.length} files`);
     next();
   });
 };
