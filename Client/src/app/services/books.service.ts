@@ -8,8 +8,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class BooksService {
- // book_URL = '/books';
-  book_URL = 'http://localhost:5000/books';
+  book_URL = '/books';
+ // book_URL = 'http://localhost:5000/books';
   http = inject(HttpClient);
   authService = inject(AuthService);
   books$ = this.getAllBooks();

@@ -1,6 +1,11 @@
 const dbaccessorBooks = require("../dal/db-accessor-book")
+const fs = require('fs');
+const path = require('path');
 
 const dbBooks = new dbaccessorBooks();
+
+// תיקיית הטמונות
+const imageDir = path.join(__dirname, '../../Client/src/assets/book-img');
 
 class bookController{
 
@@ -34,6 +39,21 @@ delete = async(req, res)=>{
         const deletedBook = await dbBooks.delete(bookId);
         if (!deletedBook) {
             return res.status(404).json({ error: "Book not found" });
+        }
+        
+        // מחק את התמונה של הספר אם היא קיימת
+        if (deletedBook.picture) {
+            const imagePath = path.join(imageDir, deletedBook.picture);
+            
+            if (fs.existsSync(imagePath)) {
+                try {
+                    fs.unlinkSync(imagePath);
+                    console.log(`🗑️ Image deleted: ${deletedBook.picture}`);
+                } catch (fileError) {
+                    console.error(`⚠️ Failed to delete image: ${fileError.message}`);
+                    // לא נחזיר error - הספר כבר נמחק מה-DB
+                }
+            }
         }
         
         res.status(200).json({ success: true, message: "Book deleted successfully" });
