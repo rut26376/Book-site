@@ -20,8 +20,10 @@ exports.uploadImage = (req, res) => {
     // דפוס את הנתיב המלא של התמונה
     const fullPath = path.join(uploadDir, req.file.filename);
     console.log(`✅ Image saved successfully: ${req.file.filename}`);
+    console.log(`📁 Upload directory: ${uploadDir}`);
     console.log(`📁 Full path: ${fullPath}`);
     console.log(`📊 Size: ${req.file.size} bytes`);
+    console.log(`📄 File exists: ${fs.existsSync(fullPath)}`);
 
     res.json({
       success: true,

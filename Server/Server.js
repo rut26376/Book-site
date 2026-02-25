@@ -40,6 +40,10 @@ if (!fs.existsSync(clientBuildPath)) {
 
 app.use(myexpress.static(clientBuildPath));
 
+// Serve book images from Client/src/assets/book-img
+const booksImgPath = path.join(__dirname, '../Client/src/assets/book-img');
+app.use('/assets/book-img', myexpress.static(booksImgPath));
+
 // API routes
 app.use("/books", bookRouter)
 app.use("/auth", customerRouter)
