@@ -298,6 +298,252 @@
   margin: 0;
 }
 
+/* מודל עריכה */
+.edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  direction: rtl;
+}
+
+.edit-modal-content {
+  background: white;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.edit-modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-close:hover {
+  color: #333;
+}
+
+.edit-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  direction: rtl;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.edit-preview-img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.edit-modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-cancel:hover {
+  background: #e5e5e5;
+}
+
+.btn-save {
+  padding: 10px 20px;
+  border: none;
+  background: #28a745;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-save:hover {
+  background: #218838;
+}
+
+/* סעיף התמונה */
+.image-section {
+  padding: 10px 0;
+}
+
+.image-dropdown {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.btn-toggle-image {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  background: #e3f2fd;
+  color: #1976d2;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: right;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn-toggle-image:hover {
+  background: #bbdefb;
+}
+
+.image-options {
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.current-image,
+.new-image-preview {
+  padding: 10px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.label-small {
+  font-weight: 600;
+  color: #666;
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+}
+
+.filename {
+  color: #333;
+  font-size: 13px;
+  margin: 5px 0 10px 0;
+  word-break: break-all;
+}
+
+.file-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-input {
+  display: none;
+}
+
+.btn-upload {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px dashed #2196f3;
+  background: white;
+  color: #2196f3;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.btn-upload:hover {
+  background: #e3f2fd;
+  border-color: #1976d2;
+}
+
+.btn-remove-image {
+  width: 100%;
+  padding: 8px 12px;
+  background: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #ffcdd2;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.btn-remove-image:hover {
+  background: #ffcdd2;
+}
+
 /* responsive */
 @media (max-width: 768px) {
   .books-management {

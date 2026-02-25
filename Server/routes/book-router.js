@@ -10,5 +10,6 @@ const router = express.Router()
 router.post("/newBook", adminMiddleware, bookCtrl.newBook)
 router.get("/getAll" , bookCtrl.getAll)
 router.delete("/delete/:id", adminMiddleware, bookCtrl.delete)
+router.put("/edit/:id", adminMiddleware, bookCtrl.edit)
 
 module.exports = router

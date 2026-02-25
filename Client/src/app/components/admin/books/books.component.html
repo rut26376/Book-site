@@ -100,5 +100,87 @@
       </div>
     </div>
   </div>
+
+  <!-- מודל לעריכת ספר -->
+  <div *ngIf="isEditMode && editingBook" class="edit-modal-overlay" (click)="cancelEdit()">
+    <div class="edit-modal-content" (click)="$event.stopPropagation()">
+      <div class="edit-modal-header">
+        <h3>עריכת ספר</h3>
+        <button class="btn-close" (click)="cancelEdit()">✕</button>
+      </div>
+      <div class="edit-modal-body">
+        <div class="form-group">
+          <label>שם הספר:</label>
+          <input type="text" [(ngModel)]="editingBook.bookName" />
+        </div>
+
+        <div class="form-group">
+          <label>מחבר:</label>
+          <input type="text" [(ngModel)]="editingBook.author" />
+        </div>
+
+        <div class="form-group">
+          <label>מחיר:</label>
+          <input type="number" [(ngModel)]="editingBook.price" />
+        </div>
+
+        <div class="form-group">
+          <label>גודל:</label>
+          <input type="text" [(ngModel)]="editingBook.size" />
+        </div>
+
+        <div class="form-group">
+          <label>תיאור:</label>
+          <textarea [(ngModel)]="editingBook.description" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>תמונה:</label>
+          <div class="image-section">
+            <!-- דרופדאון לבחירת תמונה -->
+            <div class="image-dropdown">
+              <button class="btn-toggle-image" (click)="toggleImageOptions()">
+                🖼️ {{ newImagePreview ? 'שינוי תמונה' : 'העלה תמונה חדשה' }}
+              </button>
+              <div *ngIf="editingBook.showImageOptions" class="image-options">
+                <div class="current-image" *ngIf="editingBook.picture && !newImagePreview">
+                  <p class="label-small">תמונה קיימת:</p>
+                  <p class="filename">{{ editingBook.picture }}</p>
+                  <img 
+                    [src]="getImageUrl(editingBook.picture)" 
+                    alt="preview" 
+                    class="edit-preview-img"
+                  />
+                </div>
+                <div class="file-input-wrapper">
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    (change)="onImageSelectedForEdit($event)"
+                    class="file-input"
+                    #fileInput
+                  />
+                  <button class="btn-upload" (click)="fileInput.click()">
+                    📁 בחר תמונה חדשה
+                  </button>
+                </div>
+                <div class="new-image-preview" *ngIf="newImagePreview">
+                  <p class="label-small">תמונה חדשה:</p>
+                  <img [src]="newImagePreview" alt="new-preview" class="edit-preview-img" />
+                  <button class="btn-remove-image" (click)="removeNewImage()">
+                    ✕ הסר תמונה חדשה
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-modal-footer">
+        <button class="btn-cancel" (click)="cancelEdit()">ביטול</button>
+        <button class="btn-save" (click)="saveEdit()">שמור</button>
+      </div>
+    </div>
+  </div>
 </div>
 

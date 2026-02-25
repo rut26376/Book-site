@@ -41,4 +41,16 @@ export class BooksService {
     
     return this.http.delete(`${this.book_URL}/delete/${id}`, { headers });
   }
-}
+
+  editBook(id: number, updatedData: Partial<Book>): Observable<Book> {
+    const token = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders();
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.put<Book>(`${this.book_URL}/edit/${id}`, updatedData, { headers });
+    
+  }
+  }

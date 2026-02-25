@@ -33,6 +33,26 @@ delete = async(id)=>{
         throw error;
     }
 }
+
+getBookById = async(id)=>{
+    try {
+        const book = await books.findOne({ id: id })
+        return book;
+    } catch (error) {
+        console.error("Error getting book:", error);
+        throw error;
+    }
+}
+
+edit = async(id, updatedData)=>{
+    try {
+        const updatedBook = await books.findOneAndUpdate({ id: id }, updatedData, { new: true })
+        return updatedBook;
+    } catch (error) {
+        console.error("Error updating book:", error);
+        throw error;
+    }
+}
 }
 
 module.exports = dbaccessorBooks;

@@ -48,10 +48,8 @@ delete = async(req, res)=>{
             if (fs.existsSync(imagePath)) {
                 try {
                     fs.unlinkSync(imagePath);
-                    console.log(`🗑️ Image deleted: ${deletedBook.picture}`);
                 } catch (fileError) {
                     console.error(`⚠️ Failed to delete image: ${fileError.message}`);
-                    // לא נחזיר error - הספר כבר נמחק מה-DB
                 }
             }
         }
@@ -62,7 +60,39 @@ delete = async(req, res)=>{
         res.status(500).json({ error: "Failed to delete book" });
     }
 }
-}
 
+edit = async(req, res)=>{
+    try {
+        const bookId = req.params.id;
+        const updatedData = req.body;
+
+        // קבל את הספר הישן כדי למחוק את התמונה הישנה אם שונתה
+        const oldBook = await dbBooks.getBookById(bookId);
+        
+        // אם התמונה שונתה, מחק את הישנה
+        if (oldBook && oldBook.picture && updatedData.picture !== oldBook.picture) {
+            const oldImagePath = path.join(imageDir, oldBook.picture);
+            if (fs.existsSync(oldImagePath)) {
+                try {
+                    fs.unlinkSync(oldImagePath);
+                    console.log(`🗑️ תמונה ישנה נמחקה: ${oldBook.picture}`);
+                } catch (fileError) {
+                    console.error(`⚠️ Failed to delete old image: ${fileError.message}`);
+                }
+            }
+        }
+
+        const updatedBook = await dbBooks.edit(bookId, updatedData);
+        if (!updatedBook) {
+            return res.status(404).json({ error: "Book not found" });
+        }
+
+        res.status(200).json({ success: true, book: updatedBook });
+    } catch (error) {
+        console.error("Error in edit:", error.message);
+        res.status(500).json({ error: "Failed to update book" });
+    }
+}
+}
 module.exports = bookController;
 

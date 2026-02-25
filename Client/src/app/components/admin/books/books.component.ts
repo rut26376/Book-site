@@ -30,6 +30,12 @@ export class BooksComponent implements OnInit {
   // תצוגת תמונה גדולה
   selectedImageBook: any = null;
   showImageModal: boolean = false;
+  
+  // עריכה
+  isEditMode: boolean = false;
+  editingBook: any = null;
+  selectedImageFile: File | null = null;
+  newImagePreview: string | null = null;
 
   ngOnInit() {
     this.loadBooks();
@@ -111,7 +117,115 @@ export class BooksComponent implements OnInit {
    * עדכן ספר
    */
   editBook(book: any) {
-    alert('עריכה טרם הטמעה');
+    this.isEditMode = true;
+    // עיתוי עמוק כדי לא לפגוע בנתונים המקוריים
+    this.editingBook = JSON.parse(JSON.stringify(book));
+    this.editingBook.showImageOptions = false; // לא להציג את הדרופדאון בהתחלה
+    this.selectedImageFile = null;
+    this.newImagePreview = null;
+  }
+
+  /**
+   * החלף את תצוגת אפשרויות התמונה
+   */
+  toggleImageOptions() {
+    if (this.editingBook) {
+      this.editingBook.showImageOptions = !this.editingBook.showImageOptions;
+    }
+  }
+
+  /**
+   * בחר תמונה חדשה לעריכה
+   */
+  onImageSelectedForEdit(event: any) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    this.selectedImageFile = file;
+
+    // הצג תצוגה מקדימה
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.newImagePreview = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /**
+   * הסר את התמונה החדשה
+   */
+  removeNewImage() {
+    this.selectedImageFile = null;
+    this.newImagePreview = null;
+  }
+
+  /**
+   * ביטול עריכה
+   */
+  cancelEdit() {
+    this.isEditMode = false;
+    this.editingBook = null;
+  }
+
+  /**
+   * שמור שינויים בספר
+   */
+  saveEdit() {
+    if (!this.editingBook || !this.editingBook.id) {
+      alert('שגיאה: לא נמצא מזהה הספר');
+      return;
+    }
+
+    // אם בחרנו תמונה חדשה, צריך להעלות אותה קודם
+    if (this.selectedImageFile) {
+      // גנרה שם קובץ חדש (כמו בהוספה)
+      const fileExtension = this.selectedImageFile.name.split('.').pop();
+      const cleanBookName = this.editingBook.bookName
+        .trim()
+        .replace(/[\s]+/g, '_')
+        .replace(/[\/\\:*?"<>|]/g, '')
+        .substring(0, 100);
+      const newFilename = `${cleanBookName}.${fileExtension}`;
+
+      // העלה את התמונה החדשה
+      const uploadService = this.uploadService;
+      uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
+        next: (response: any) => {
+          // מחק את התמונה הישנה אם יש
+          if (this.editingBook.picture) {
+            console.log(`מחק תמונה ישנה: ${this.editingBook.picture}`);
+          }
+
+          // עדכן את שם התמונה בספר
+          this.editingBook.picture = newFilename;
+
+          // עכשיו שמור את הספר עם התמונה החדשה
+          this.performSaveEdit();
+        },
+        error: (err: any) => {
+          alert('שגיאה בהעלאת התמונה: ' + (err.error?.error || 'בדוק את ה-console'));
+        }
+      });
+    } else {
+      // אין תמונה חדשה, פשוט שמור את הנתונים
+      this.performSaveEdit();
+    }
+  }
+
+  /**
+   * בצע את שמירת הנתונים
+   */
+  private performSaveEdit() {
+    this.booksService.editBook(this.editingBook.id, this.editingBook).subscribe({
+      next: (response: any) => {
+        alert('הספר עודכן בהצלחה!');
+        this.cancelEdit();
+        this.loadBooks(); // רענן את הרשימה
+      },
+      error: (err: any) => {
+        alert('שגיאה בעדכון הספר: ' + (err.error?.error || err.error?.message || 'בדוק את ה-console'));
+      }
+    });
   }
 
   /**
