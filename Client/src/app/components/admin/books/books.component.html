@@ -93,7 +93,7 @@
       <div class="image-modal-body">
         <img 
           *ngIf="selectedImageBook?.picture" 
-          [src]="'/assets/book-img/' + selectedImageBook.picture" 
+          [src]="getImageUrl(selectedImageBook.picture)" 
           [alt]="selectedImageBook?.bookName"
         />
         <p *ngIf="!selectedImageBook?.picture">אין תמונה להצגה</p>

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BooksService } from '../../../services/books.service';
+import { UploadService } from '../../../services/upload.service';
 import categoriesData from '../../../data/categories.json';
 
 @Component({
@@ -13,6 +14,7 @@ import categoriesData from '../../../data/categories.json';
 })
 export class BooksComponent implements OnInit {
   private booksService = inject(BooksService);
+  private uploadService = inject(UploadService);
 
   books: any[] = [];
   allBooks: any[] = [];
@@ -63,6 +65,13 @@ export class BooksComponent implements OnInit {
       
       return matchesSearch && matchesAuthor && matchesCategory;
     });
+  }
+
+  /**
+   * קבל URL של תמונה - עובד הן מקומית והן בענן
+   */
+  getImageUrl(filename: string): string {
+    return this.uploadService.getImageUrl(filename);
   }
 
   /**

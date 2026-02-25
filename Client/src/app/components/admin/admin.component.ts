@@ -22,6 +22,9 @@ export class AdminComponent {
   private orderService = inject(OrderService);
   private uploadService = inject(UploadService);
   private router = inject(Router);
+  
+  // צריך להיות public בשביל ה-template
+  uploadService_public = this.uploadService;
 
   currentUser = this.authService.getCurrentUser();
   activeTab: 'books' | 'orders' = 'books';

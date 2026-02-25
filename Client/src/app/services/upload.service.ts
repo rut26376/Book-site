@@ -12,6 +12,22 @@ export class UploadService {
   constructor(private http: HttpClient) {}
 
   /**
+   * Get the full URL for an image
+   * Works both in development and production
+   */
+  getImageUrl(filename: string): string {
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    
+    if (isLocalhost) {
+      // מקומית: השתמש ב-localhost:5000
+      return `${this.apiUrl}/assets/book-img/${filename}`;
+    } else {
+      // בענן: השתמש בדומיין הנוכחי
+      return `/assets/book-img/${filename}`;
+    }
+  }
+
+  /**
    * Upload single image to server
    * @param file - The image file
    * @param filename - The filename to save as (should be the book name)
