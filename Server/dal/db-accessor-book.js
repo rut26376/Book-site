@@ -23,6 +23,16 @@ getAll = async()=>{
     }
 
 }
+
+delete = async(id)=>{
+    try {
+        const deletedBook = await books.findOneAndDelete({ id: id })
+        return deletedBook;
+    } catch (error) {
+        console.error("Error deleting book:", error);
+        throw error;
+    }
+}
 }
 
 module.exports = dbaccessorBooks;

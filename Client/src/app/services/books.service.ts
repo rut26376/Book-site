@@ -30,4 +30,15 @@ export class BooksService {
     
     return this.http.post<Book>(`${this.book_URL}/newBook`, book, { headers });
   }
+
+  deleteBook(id: number): Observable<any> { 
+    const token = localStorage.getItem('auth_token');
+    let headers = new HttpHeaders();
+    
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    
+    return this.http.delete(`${this.book_URL}/delete/${id}`, { headers });
+  }
 }

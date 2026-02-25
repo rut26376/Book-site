@@ -9,5 +9,6 @@ const router = express.Router()
 // Public routes
 router.post("/newBook", adminMiddleware, bookCtrl.newBook)
 router.get("/getAll" , bookCtrl.getAll)
+router.delete("/delete/:id", adminMiddleware, bookCtrl.delete)
 
 module.exports = router

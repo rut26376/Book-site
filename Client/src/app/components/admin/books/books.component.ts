@@ -86,8 +86,15 @@ export class BooksComponent implements OnInit {
    */
   deleteBook(bookId: number) {
     if (confirm('האם אתה בטוח שברצונך למחוק ספר זה?')) {
-      // נוסיף את הפונקציה הזו ל-BooksService אחר כך
-      alert('מחיקה טרם הטמעה');
+      this.booksService.deleteBook(bookId).subscribe({
+        next: (response: any) => {
+          alert('הספר נמחק בהצלחה!');
+          this.loadBooks(); // Reload the books after deletion
+        },
+        error: (err: any) => {
+          alert('שגיאה בחיקת הספר: ' + (err.error?.error || err.error?.message || 'בדוק את ה-console'));
+        }
+      });
     }
   }
 
