@@ -17,8 +17,9 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    // שמור עם השם המקורי, הcontroller ישנה את השם אחרי כן
-    cb(null, file.originalname);
+    // קבל את השם מה-query parameter (שנשלח מה-frontend)
+    const filename = req.query.filename ? decodeURIComponent(req.query.filename) : file.originalname;
+    cb(null, filename);
   }
 });
 

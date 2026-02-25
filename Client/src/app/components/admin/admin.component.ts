@@ -143,11 +143,13 @@ export class AdminComponent {
       
       // יצור שם קובץ על פי שם הספר
       const fileExtension = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
-      const cleanBookName = this.newBook.bookName
+      
+      // נקה את שם הספר - הסר תווים שאינם תקינים בשמות קבצים
+      let cleanBookName = this.newBook.bookName
         .trim()
-        .replace(/[^a-zA-Z0-9\u0590-\u05FF\s-]/g, '')
-        .replace(/\s+/g, '_')
-        .substring(0, 50);
+        .replace(/[\s]+/g, '_')  // החלף רווחים בקו תחתי
+        .replace(/[\/\\:*?"<>|]/g, '')  // הסר תווים אסורים בשמות קבצים
+        .substring(0, 100);  // הגבל ל-100 תווים
       
       const pictureFilename = `${cleanBookName}.${fileExtension}`;
 

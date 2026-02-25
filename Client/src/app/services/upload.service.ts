@@ -19,9 +19,10 @@ export class UploadService {
   uploadImage(file: File, filename: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('filename', filename);
 
-    return this.http.post(`${this.apiUrl}/upload-image`, formData);
+    // שלח את השם בURL כדי להימנע מבעיות encoding
+    const encodedFilename = encodeURIComponent(filename);
+    return this.http.post(`${this.apiUrl}/upload-image?filename=${encodedFilename}`, formData);
   }
 
   /**

@@ -17,33 +17,16 @@ exports.uploadImage = (req, res) => {
       });
     }
 
-    // קבל את שם הקובץ הרצוי מ-request body
-    const desiredFilename = req.body.filename;
-    
-    if (!desiredFilename) {
-      return res.status(400).json({
-        success: false,
-        error: 'No filename provided'
-      });
-    }
-
-    // קבל את שם הקובץ שנשמר כרגע (שם מקורי)
-    const currentPath = req.file.path;
-    const newPath = path.join(uploadDir, desiredFilename);
-
-    // שנה שם את הקובץ מהשם המקורי לשם הרצוי
-    fs.renameSync(currentPath, newPath);
-
     res.json({
       success: true,
       message: 'Image uploaded successfully',
-      filename: desiredFilename,
-      path: `/assets/book-img/${desiredFilename}`,
+      filename: req.file.filename,
+      path: `/assets/book-img/${req.file.filename}`,
       size: req.file.size,
       mimeType: req.file.mimetype
     });
 
-    console.log(`✅ Image saved: ${desiredFilename} (${req.file.size} bytes)`);
+    console.log(`✅ Image saved: ${req.file.filename} (${req.file.size} bytes)`);
   } catch (error) {
     console.error('❌ Upload controller error:', error);
     res.status(500).json({
