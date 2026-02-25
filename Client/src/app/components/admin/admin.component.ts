@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { BooksService } from '../../services/books.service';
 import { OrderService } from '../../services/order.service';
+import { UploadService } from '../../services/upload.service';
 import categoriesData from '../../data/categories.json';
 
 @Component({
@@ -18,6 +19,7 @@ export class AdminComponent {
   private authService = inject(AuthService);
   private booksService = inject(BooksService);
   private orderService = inject(OrderService);
+  private uploadService = inject(UploadService);
   private router = inject(Router);
 
   currentUser = this.authService.getCurrentUser();
@@ -110,42 +112,18 @@ export class AdminComponent {
       return;
     }
 
-    // קרא את הקובץ כData URL
+    // שמור את הקובץ בComponent לשימוש מאוחר
+    (this.newBook as any).imageFile = file;
+    
+    // הצג preview של התמונה
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      // קבל את סיומת הקובץ (jpg, png וכו')
-      const fileExtension = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-      
-      // שמור את שם הקובץ על פי שם הספר
-      // אם אין שם ספר עדיין, השתמש בשם המקורי
-      let filename: string;
-      
-      if (this.newBook.bookName && this.newBook.bookName.trim()) {
-        // טהר את שם הספר (הסר תווים מיוחדים)
-        const cleanBookName = this.newBook.bookName
-          .trim()
-          .replace(/[^a-zA-Z0-9\u0590-\u05FF\s-]/g, '') // הסר תווים מיוחדים
-          .replace(/\s+/g, '_') // החלף רווחים בקו תחתון
-          .substring(0, 50); // הגבל לאורך מקסימום
-        
-        filename = `${cleanBookName}.${fileExtension}`;
-      } else {
-        // אם אין שם ספר, השתמש בשם המקורי עם timestamp
-        const timestamp = Date.now();
-        filename = `${timestamp}_${file.name}`;
-      }
-      
-      // שמור את שם הקובץ בלבד (לא את כל ה-URL)
-      this.newBook.picture = filename;
-      
-      console.log('📸 Image selected:', {
-        originalName: file.name,
-        savedName: filename,
-        bookName: this.newBook.bookName,
-        size: file.size
-      });
+      (this.newBook as any).imagePreview = e.target.result;
     };
     reader.readAsDataURL(file);
+
+    console.log('📸 Image selected:', file.name);
+    alert('תמונה נבחרה. היא תשמר כשתשמור את הספר.');
   }
 
   addNewBook() {
@@ -159,20 +137,42 @@ export class AdminComponent {
       return;
     }
 
-    // אם בחרו תמונה, עדכן את שם הקובץ על פי שם הספר
-    let pictureFilename = this.newBook.picture;
-    if (this.newBook.picture) {
-      const fileExtension = this.newBook.picture.split('.').pop()?.toLowerCase() || 'jpg';
+    // אם בחרו תמונה, העלה אותה לשרבר עכשיו
+    if ((this.newBook as any).imageFile) {
+      const imageFile = (this.newBook as any).imageFile;
+      
+      // יצור שם קובץ על פי שם הספר
+      const fileExtension = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
       const cleanBookName = this.newBook.bookName
         .trim()
         .replace(/[^a-zA-Z0-9\u0590-\u05FF\s-]/g, '')
         .replace(/\s+/g, '_')
         .substring(0, 50);
       
-      pictureFilename = `${cleanBookName}.${fileExtension}`;
-    }
+      const pictureFilename = `${cleanBookName}.${fileExtension}`;
 
-    // הוסף ID (השרת יוכל לעדכן אם צריך)
+      // העלה את התמונה לשרבר עם השם החדש
+      this.uploadService.uploadImage(imageFile, pictureFilename).subscribe({
+        next: (response: any) => {
+          console.log('✅ Image uploaded with filename:', pictureFilename);
+          // אחרי שהתמונה נשמרה בהצלחה, שמור את הספר בDB
+          this.saveBookToDatabase(pictureFilename);
+        },
+        error: (err: any) => {
+          console.error('❌ Image upload error:', err);
+          alert('שגיאה בהעלאת התמונה');
+        }
+      });
+    } else {
+      // אם לא בחרו תמונה, שמור את הספר בלי תמונה
+      this.saveBookToDatabase('');
+    }
+  }
+
+  /**
+   * שמור את הספר בDB עם שם התמונה
+   */
+  private saveBookToDatabase(pictureFilename: string) {
     const bookWithId: any = {
       id: Math.max(...this.books.map(b => b.id || 0), 0) + 1,
       bookName: this.newBook.bookName,
@@ -180,7 +180,7 @@ export class AdminComponent {
       description: this.newBook.description,
       price: this.newBook.price,
       size: this.newBook.size,
-      picture: pictureFilename, // ← השתמש בשם המעודכן
+      picture: pictureFilename,  // ← שם הקובץ (כשם הספר)
       category: this.newBook.category
     };
 
@@ -214,6 +214,8 @@ export class AdminComponent {
       picture: '',
       category: []
     };
+    (this.newBook as any).imageFile = null;
+    (this.newBook as any).imagePreview = null;
     this.selectedMainCategory = '';
     this.selectedSubCategories = [];
     this.availableSubCategories = [];

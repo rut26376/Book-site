@@ -6,11 +6,12 @@ const db = require("./dal/db-accessor")
 const bookRouter = require("./routes/book-router")
 const customerRouter = require("./routes/customer-router")
 const orderRouter = require("./routes/order-router")
+const uploadRouter = require("./routes/upload-router")
 const app = myexpress()
 
 app.use(cors())
-app.use(myexpress.urlencoded({extended: true}))
-app.use(myexpress.json())
+app.use(myexpress.urlencoded({extended: true, limit: '50mb'}))
+app.use(myexpress.json({limit: '50mb'}))
 
 // חיבור ל DB
 const init = async () => {
@@ -53,6 +54,7 @@ app.use(myexpress.static(clientBuildPath));
 app.use("/books", bookRouter)
 app.use("/auth", customerRouter)
 app.use("/orders", orderRouter)
+app.use("/", uploadRouter)
 
 // Fallback to Angular index.html for client-side routing
 app.use((req, res) => {
