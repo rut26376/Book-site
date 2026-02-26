@@ -180,11 +180,6 @@ export class BooksComponent implements OnInit {
     if (this.selectedImageFile) {
       const oldImageFilename = this.editingBook.picture; // שמור את שם התמונה הישנה
       
-      console.log('📝 === התחלת עדכון ספר עם תמונה חדשה ===');
-      console.log('📕 ID של הספר:', this.editingBook.id);
-      console.log('📕 שם הספר:', this.editingBook.bookName);
-      console.log('🖼️ התמונה הישנה:', oldImageFilename);
-      
       // גנרה שם קובץ חדש עם timestamp כדי להימנע מ-caching
       const fileExtension = this.selectedImageFile.name.split('.').pop();
       const cleanBookName = this.editingBook.bookName
@@ -196,45 +191,34 @@ export class BooksComponent implements OnInit {
       // הוסף timestamp לשם הקובץ כדי לוודא שזה קובץ חדש בחלוטין
       const timestamp = Date.now();
       const newFilename = `${cleanBookName}_${timestamp}.${fileExtension}`;
-      console.log('✨ התמונה החדשה:', newFilename);
-      console.log('📂 נמקום: /assets/book-img/' + newFilename);
 
       // העלה את התמונה החדשה
-      console.log('⬆️ מתחילה העלאת התמונה...');
       this.uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
         next: (response: any) => {
-          console.log('✅ התמונה החדשה הועלתה בהצלחה');
-          
           // מחק את התמונה הישנה מהשרבר
           if (oldImageFilename) {
-            console.log('🗑️ מתחיל למחוק את התמונה הישנה:', oldImageFilename);
-            console.log('📂 נמקום: /assets/book-img/' + oldImageFilename);
             this.booksService.deleteImage(oldImageFilename).subscribe({
               next: () => {
-                console.log('✅ התמונה הישנה נמחקה בהצלחה');
+                // silent success
               },
               error: (err: any) => {
-                console.error('❌ שגיאה בעריקת התמונה הישנה:', err);
+                console.warn('לא הצלחנו למחוק תמונה ישנה:', err);
               }
             });
           }
 
           // עדכן את שם התמונה בספר
           this.editingBook.picture = newFilename;
-          console.log('🔄 הגדרת שם התמונה החדש בספר:', newFilename);
 
           // עכשיו שמור את הספר עם התמונה החדשה
-          console.log('💾 שומר את הספר בדטה-בייס...');
           this.performSaveEdit();
         },
         error: (err: any) => {
-          console.error('❌ שגיאה בהעלאת התמונה:', err);
           alert('שגיאה בהעלאת התמונה: ' + (err.error?.error || 'בדוק את ה-console'));
         }
       });
     } else {
       // אין תמונה חדשה, פשוט שמור את הנתונים
-      console.log('📝 עדכון ספר ללא תמונה חדשה');
       this.performSaveEdit();
     }
   }
