@@ -40,6 +40,16 @@ if (!fs.existsSync(clientBuildPath)) {
 
 app.use(myexpress.static(clientBuildPath));
 
+// Middleware להגדרת headers שמונעים caching של תמונות
+app.use((req, res, next) => {
+  if (req.path.includes('/assets/book-img/')) {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+  }
+  next();
+});
+
 // Serve book images from Client/src/assets/book-img
 const booksImgPath = path.join(__dirname, '../Client/src/assets/book-img');
 app.use('/assets/book-img', myexpress.static(booksImgPath));

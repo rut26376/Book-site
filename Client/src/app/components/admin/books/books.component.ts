@@ -191,8 +191,20 @@ export class BooksComponent implements OnInit {
       const uploadService = this.uploadService;
       uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
         next: (response: any) => {
-          // מחק את התמונה הישנה אם יש
-          if (this.editingBook.picture) {
+          // עדכן את שם התמונה בספר מיד
+          this.editingBook.picture = newFilename;
+
+          // עדכן את allBooks כדי שהתמונה החדשה תוצג בטבלה
+          const bookIndex = this.allBooks.findIndex(b => b.id === this.editingBook.id);
+          if (bookIndex !== -1) {
+            this.allBooks[bookIndex].picture = newFilename;
+            // אנו מעתיקים את המערך כדי לזרוז את Angular לגלות את השינוי
+            this.allBooks = [...this.allBooks];
+            this.books = [...this.books];
+          }
+
+          // מחק את התמונה הישנה אם יש (בצורה אסינכרונית)
+          if (this.editingBook.picture !== newFilename && this.editingBook.picture) {
             this.booksService.deleteImage(this.editingBook.picture).subscribe({
               next: () => {
                 console.log(`✅ תמונה ישנה נמחקה: ${this.editingBook.picture}`);
@@ -201,15 +213,6 @@ export class BooksComponent implements OnInit {
                 console.error(`⚠️ שגיאה במחיקת התמונה הישנה:`, err);
               }
             });
-          }
-
-          // עדכן את שם התמונה בספר
-          this.editingBook.picture = newFilename;
-
-          // עדכן את allBooks כדי שהתמונה החדשה תוצג
-          const bookIndex = this.allBooks.findIndex(b => b.id === this.editingBook.id);
-          if (bookIndex !== -1) {
-            this.allBooks[bookIndex].picture = newFilename;
           }
 
           // עכשיו שמור את הספר עם התמונה החדשה

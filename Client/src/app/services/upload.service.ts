@@ -14,18 +14,16 @@ export class UploadService {
   /**
    * Get the full URL for an image
    * Works both in development and production
-   * Includes cache busting to ensure fresh images are loaded
    */
   getImageUrl(filename: string): string {
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const cacheBreaker = new Date().getTime(); // Add timestamp to bust cache
     
     if (isLocalhost) {
       // מקומית: השתמש ב-localhost:5000
-      return `${this.apiUrl}/assets/book-img/${filename}?v=${cacheBreaker}`;
+      return `${this.apiUrl}/assets/book-img/${filename}`;
     } else {
       // בענן: השתמש בדומיין הנוכחי
-      return `/assets/book-img/${filename}?v=${cacheBreaker}`;
+      return `/assets/book-img/${filename}`;
     }
   }
 
