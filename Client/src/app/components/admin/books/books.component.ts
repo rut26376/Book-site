@@ -206,6 +206,12 @@ export class BooksComponent implements OnInit {
           // עדכן את שם התמונה בספר
           this.editingBook.picture = newFilename;
 
+          // עדכן את allBooks כדי שהתמונה החדשה תוצג
+          const bookIndex = this.allBooks.findIndex(b => b.id === this.editingBook.id);
+          if (bookIndex !== -1) {
+            this.allBooks[bookIndex].picture = newFilename;
+          }
+
           // עכשיו שמור את הספר עם התמונה החדשה
           this.performSaveEdit();
         },
