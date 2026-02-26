@@ -225,7 +225,10 @@ export class BooksComponent implements OnInit {
       next: (response: any) => {
         alert('הספר עודכן בהצלחה!');
         this.cancelEdit();
-        this.loadBooks(); // רענן את הרשימה
+        // רענן את הדף כדי לוודא שהתמונה החדשה טוענת
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       },
       error: (err: any) => {
         alert('שגיאה בעדכון הספר: ' + (err.error?.error || err.error?.message || 'בדוק את ה-console'));
