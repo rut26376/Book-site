@@ -17,6 +17,12 @@ exports.uploadImage = (req, res) => {
       });
     }
 
+    console.log('⬆️ === התחלת העלאת תמונה ===');
+    console.log('📄 שם הקובץ החדש:', req.file.filename);
+    console.log('📂 נתיב:', `/assets/book-img/${req.file.filename}`);
+    console.log('📊 גודל הקובץ:', req.file.size, 'bytes');
+    console.log('📋 סוג הקובץ:', req.file.mimetype);
+    console.log('✅ הקובץ הועלה בהצלחה!');
 
     res.json({
       success: true,

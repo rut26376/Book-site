@@ -99,14 +99,22 @@ deleteImage = async(req, res) => {
         const filename = req.params.filename;
         const imagePath = path.join(imageDir, filename);
         
+        console.log('🗑️ === התחלת מחיקת תמונה ===');
+        console.log('📄 שם הקובץ שהגיע:', filename);
+        console.log('📂 נתיב מלא:', imagePath);
+        console.log('📂 תיקיית בסיס:', imageDir);
+        
         if (fs.existsSync(imagePath)) {
+            console.log('✅ הקובץ קיים, מוחק...');
             fs.unlinkSync(imagePath);
+            console.log('✅ הקובץ נמחק בהצלחה!');
             res.status(200).json({ success: true, message: "Image deleted successfully" });
         } else {
+            console.error('❌ הקובץ לא נמצא בנתיב:', imagePath);
             res.status(404).json({ error: "Image not found" });
         }
     } catch (error) {
-        console.error("Error deleting image:", error.message);
+        console.error('❌ שגיאה בעריקת התמונה:', error.message);
         res.status(500).json({ error: "Failed to delete image" });
     }
 }

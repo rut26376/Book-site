@@ -7,6 +7,10 @@ const upload = require('../config/multer.config');
 const uploadSingleImage = (req, res, next) => {
   const singleUpload = upload.single('file');
 
+  console.log('⬆️ === בדיקת תמונה בפעם ראשונה ===');
+  console.log('Query params:', req.query);
+  console.log('filename param:', req.query.filename);
+
   singleUpload(req, res, (err) => {
     if (err) {
       console.error('❌ Upload error:', err.message);
@@ -22,6 +26,9 @@ const uploadSingleImage = (req, res, next) => {
         error: 'No file provided'
       });
     }
+
+    console.log('📄 שם הקובץ שהתקבל במידלוור:', req.file.filename);
+    console.log('📂 נתיב מלא:', req.file.path);
 
     next();
   });
