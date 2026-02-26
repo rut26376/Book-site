@@ -39,7 +39,12 @@ export class UploadService {
 
     // שלח את השם בURL כדי להימנע מבעיות encoding
     const encodedFilename = encodeURIComponent(filename);
-    return this.http.post(`${this.apiUrl}/upload-image?filename=${encodedFilename}`, formData);
+    
+    // השתמש בנתיב יחסי בענן ובנתיב מלא מקומית
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const uploadEndpoint = isLocalhost ? `${this.apiUrl}/upload-image` : '/upload-image';
+    
+    return this.http.post(`${uploadEndpoint}?filename=${encodedFilename}`, formData);
   }
 
   /**
@@ -53,6 +58,9 @@ export class UploadService {
       formData.append('files', file);
     });
 
-    return this.http.post(`${this.apiUrl}/upload-images`, formData);
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const uploadEndpoint = isLocalhost ? `${this.apiUrl}/upload-images` : '/upload-images';
+    
+    return this.http.post(uploadEndpoint, formData);
   }
 }
