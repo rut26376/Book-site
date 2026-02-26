@@ -93,6 +93,29 @@ edit = async(req, res)=>{
         res.status(500).json({ error: "Failed to update book" });
     }
 }
+
+deleteImage = async(req, res)=>{
+    try {
+        const filename = req.params.filename;
+        const imagePath = path.join(imageDir, filename);
+
+        if (!fs.existsSync(imagePath)) {
+            return res.status(404).json({ error: "Image not found" });
+        }
+
+        try {
+            fs.unlinkSync(imagePath);
+            console.log(`🗑️ תמונה נמחקה: ${filename}`);
+            res.status(200).json({ success: true, message: "Image deleted successfully" });
+        } catch (fileError) {
+            console.error(`⚠️ Failed to delete image: ${fileError.message}`);
+            res.status(500).json({ error: "Failed to delete image" });
+        }
+    } catch (error) {
+        console.error("Error in deleteImage:", error.message);
+        res.status(500).json({ error: "Failed to delete image" });
+    }
+}
 }
 module.exports = bookController;
 

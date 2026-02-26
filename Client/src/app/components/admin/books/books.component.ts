@@ -193,7 +193,14 @@ export class BooksComponent implements OnInit {
         next: (response: any) => {
           // מחק את התמונה הישנה אם יש
           if (this.editingBook.picture) {
-            console.log(`מחק תמונה ישנה: ${this.editingBook.picture}`);
+            this.booksService.deleteImage(this.editingBook.picture).subscribe({
+              next: () => {
+                console.log(`✅ תמונה ישנה נמחקה: ${this.editingBook.picture}`);
+              },
+              error: (err: any) => {
+                console.error(`⚠️ שגיאה במחיקת התמונה הישנה:`, err);
+              }
+            });
           }
 
           // עדכן את שם התמונה בספר
