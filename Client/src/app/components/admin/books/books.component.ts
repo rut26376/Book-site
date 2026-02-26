@@ -178,22 +178,27 @@ export class BooksComponent implements OnInit {
 
     // אם בחרנו תמונה חדשה, צריך להעלות אותה קודם
     if (this.selectedImageFile) {
-      // גנרה שם קובץ חדש (כמו בהוספה)
+      const oldImageFilename = this.editingBook.picture; // שמור את שם התמונה הישנה
+      
+      // גנרה שם קובץ חדש (כמו בהוספה - בדיוק)
       const fileExtension = this.selectedImageFile.name.split('.').pop();
       const cleanBookName = this.editingBook.bookName
         .trim()
         .replace(/[\s]+/g, '_')
         .replace(/[\/\\:*?"<>|]/g, '')
         .substring(0, 100);
+      
       const newFilename = `${cleanBookName}.${fileExtension}`;
 
       // העלה את התמונה החדשה
-      const uploadService = this.uploadService;
-      uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
+      this.uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
         next: (response: any) => {
-          // מחק את התמונה הישנה אם יש
-          if (this.editingBook.picture) {
-            console.log(`מחק תמונה ישנה: ${this.editingBook.picture}`);
+          // מחק את התמונה הישנה מהשרבר
+          if (oldImageFilename) {
+            this.booksService.deleteImage(oldImageFilename).subscribe({
+              next: () => console.log('תמונה ישנה נמחקה'),
+              error: (err: any) => console.warn('לא הצלחנו למחוק תמונה ישנה:', err)
+            });
           }
 
           // עדכן את שם התמונה בספר

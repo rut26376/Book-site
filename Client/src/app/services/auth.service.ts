@@ -13,8 +13,8 @@ export class AuthService {
   private token = new BehaviorSubject<string | null>(null);
   token$ = this.token.asObservable();
 
-  private apiUrl = '/auth';
-  //private apiUrl = 'http://localhost:5000/auth';
+ // private apiUrl = '/auth';
+  private apiUrl = 'http://localhost:5000/auth';
 
   constructor() {
     this.loadFromStorage();
