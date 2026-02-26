@@ -191,20 +191,11 @@ export class BooksComponent implements OnInit {
       const uploadService = this.uploadService;
       uploadService.uploadImage(this.selectedImageFile, newFilename).subscribe({
         next: (response: any) => {
-          // עדכן את שם התמונה בספר מיד
+          // עדכן את שם התמונה בספר
           this.editingBook.picture = newFilename;
 
-          // עדכן את allBooks כדי שהתמונה החדשה תוצג בטבלה
-          const bookIndex = this.allBooks.findIndex(b => b.id === this.editingBook.id);
-          if (bookIndex !== -1) {
-            this.allBooks[bookIndex].picture = newFilename;
-            // אנו מעתיקים את המערך כדי לזרוז את Angular לגלות את השינוי
-            this.allBooks = [...this.allBooks];
-            this.books = [...this.books];
-          }
-
-          // מחק את התמונה הישנה אם יש (בצורה אסינכרונית)
-          if (this.editingBook.picture !== newFilename && this.editingBook.picture) {
+          // מחק את התמונה הישנה אם יש
+          if (this.editingBook.picture) {
             this.booksService.deleteImage(this.editingBook.picture).subscribe({
               next: () => {
                 console.log(`✅ תמונה ישנה נמחקה: ${this.editingBook.picture}`);
@@ -236,7 +227,10 @@ export class BooksComponent implements OnInit {
       next: (response: any) => {
         alert('הספר עודכן בהצלחה!');
         this.cancelEdit();
-        this.loadBooks(); // רענן את הרשימה
+        // רענן את הדף כדי לוודא שהתמונה החדשה טוענת
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       },
       error: (err: any) => {
         alert('שגיאה בעדכון הספר: ' + (err.error?.error || err.error?.message || 'בדוק את ה-console'));
