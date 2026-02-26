@@ -185,7 +185,7 @@ export class BooksComponent implements OnInit {
       console.log('📕 שם הספר:', this.editingBook.bookName);
       console.log('🖼️ התמונה הישנה:', oldImageFilename);
       
-      // גנרה שם קובץ חדש (כמו בהוספה - בדיוק)
+      // גנרה שם קובץ חדש עם timestamp כדי להימנע מ-caching
       const fileExtension = this.selectedImageFile.name.split('.').pop();
       const cleanBookName = this.editingBook.bookName
         .trim()
@@ -193,7 +193,9 @@ export class BooksComponent implements OnInit {
         .replace(/[\/\\:*?"<>|]/g, '')
         .substring(0, 100);
       
-      const newFilename = `${cleanBookName}.${fileExtension}`;
+      // הוסף timestamp לשם הקובץ כדי לוודא שזה קובץ חדש בחלוטין
+      const timestamp = Date.now();
+      const newFilename = `${cleanBookName}_${timestamp}.${fileExtension}`;
       console.log('✨ התמונה החדשה:', newFilename);
       console.log('📂 נמקום: /assets/book-img/' + newFilename);
 
@@ -219,7 +221,7 @@ export class BooksComponent implements OnInit {
 
           // עדכן את שם התמונה בספר
           this.editingBook.picture = newFilename;
-          console.log('🔄 הגדרת שם התמונה החדש בספר');
+          console.log('🔄 הגדרת שם התמונה החדש בספר:', newFilename);
 
           // עכשיו שמור את הספר עם התמונה החדשה
           console.log('💾 שומר את הספר בדטה-בייס...');
