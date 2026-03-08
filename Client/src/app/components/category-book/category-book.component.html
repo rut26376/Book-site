@@ -46,7 +46,7 @@
                 <div *ngFor="let book of books" class="book-card" (click)="viewBook(book.id)">
                     <!-- Book Image -->
                     <div class="book-image-wrapper">
-                        <img [src]="'/assets/book-img/' + book.picture" [alt]="book.bookName" class="book-image" />
+                        <img [src]="getImageUrl(book.picture)" [alt]="book.bookName" class="book-image" />
                     </div>
 
                     <!-- Book Info -->

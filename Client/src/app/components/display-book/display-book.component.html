@@ -14,7 +14,7 @@
            (mouseleave)="onImageMouseLeave($event)"
            (click)="openLightbox()">
         <img #bookImage 
-             [src]="'/assets/book-img/' + book.picture" 
+             [src]="getImageUrl(book.picture)" 
              [alt]="book.bookName" 
              class="book-image" />
         <div class="image-focus-hint">🔍 לחץ לפוקוס</div>
@@ -78,7 +78,7 @@
 <div class="lightbox" *ngIf="isLightboxOpen" (click)="closeLightbox()">
   <div class="lightbox-content" (click)="$event.stopPropagation()">
     <button class="lightbox-close" (click)="closeLightbox()">✕</button>
-    <img [src]="'/assets/book-img/' + book!.picture" 
+    <img [src]="getImageUrl(book!.picture)" 
          [alt]="book!.bookName" 
          class="lightbox-image" />
     <div class="lightbox-title">{{ book!.bookName }}</div>

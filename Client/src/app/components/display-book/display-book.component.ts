@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../../services/books.service';
+import { UploadService } from '../../services/upload.service';
 import { CartService } from '../../services/cart.service';
 import { CartDrawerService } from '../../services/cart-drawer.service';
 import { Book } from '../../models/book.model';
@@ -18,6 +19,7 @@ export class DisplayBookComponent implements OnInit {
   
   book: Book | null = null;
   bookService = inject(BooksService);
+  uploadService = inject(UploadService);
   cartService = inject(CartService);
   drawerService = inject(CartDrawerService);
   route = inject(ActivatedRoute);
@@ -48,6 +50,10 @@ export class DisplayBookComponent implements OnInit {
 
   goBack() {
     window.history.back();
+  }
+
+  getImageUrl(filename: string): string {
+    return this.uploadService.getImageUrl(filename);
   }
 
   addToCart() {

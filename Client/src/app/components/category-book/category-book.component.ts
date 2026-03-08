@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '../../models/book.model';
 import { BooksService } from '../../services/books.service';
+import { UploadService } from '../../services/upload.service';
 import { CartService } from '../../services/cart.service';
 import { CartDrawerService } from '../../services/cart-drawer.service';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,7 @@ export class CategoryBookComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   bookService = inject(BooksService);
+  uploadService = inject(UploadService);
   cartService = inject(CartService);
   drawerService = inject(CartDrawerService);
   
@@ -93,6 +95,10 @@ export class CategoryBookComponent {
 
   getQuantity(bookId: number): number {
     return this.bookQuantities[bookId] || 1;
+  }
+
+  getImageUrl(filename: string): string {
+    return this.uploadService.getImageUrl(filename);
   }
 
   goBack() {
