@@ -10,7 +10,7 @@ export class UploadService {
   private apiUrl = '';
 
   constructor(private http: HttpClient) {}
-
+  
   /**
    * Get the full URL for an image
    * Works both in development and production
