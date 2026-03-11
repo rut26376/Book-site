@@ -59,6 +59,15 @@ createOrder = async(req, res)=>{
     }
 }
 
+getAllOrders = async(req, res)=>{
+    try {
+        let list = await dbOrders.getAllOrders()
+        res.status(200).json(list)
+    } catch (error) {
+        console.error("Error in getAllOrders:", error.message);
+        res.status(500).json({ error: "Failed to get orders" });
+    }
+}
 }
 module.exports = orderController;
 

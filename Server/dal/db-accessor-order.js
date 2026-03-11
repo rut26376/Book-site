@@ -20,6 +20,15 @@ class dbaccessorOrders {
             throw error
         }
     }
+
+        getAllOrders = async () => {
+        try {
+            let allOrders = await orders.find()
+            return allOrders;
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = dbaccessorOrders;

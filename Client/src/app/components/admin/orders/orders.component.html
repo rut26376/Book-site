@@ -1,1 +1,88 @@
-<p>orders works!</p>
+<div class="orders-management">
+  <h2>ניהול הזמנות</h2>
+
+  <!-- סינון -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <label for="search">חיפוש:</label>
+      <input 
+        id="search"
+        type="text" 
+        placeholder="חיפוש לפי ID, שם או דוא״ל..." 
+        [(ngModel)]="searchQuery"
+        (input)="filterOrders()"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="status-filter">סטטוס:</label>
+      <select id="status-filter" [(ngModel)]="filterStatus" (change)="filterOrders()">
+        <option value="">הכל</option>
+        <option *ngFor="let status of uniqueStatuses" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+
+    <button class="btn-clear" (click)="searchQuery = ''; filterStatus = ''; filterOrders()">
+      🔄 ניקוי סינונים
+    </button>
+  </div>
+
+  <!-- רשימת הזמנות -->
+  <div class="orders-list-wrapper">
+    <div *ngIf="filteredOrders.length === 0" class="no-results">
+      אין הזמנות המתאימות לסינון
+    </div>
+
+    <div *ngFor="let order of filteredOrders" class="order-card">
+      <div class="order-header">
+        <div class="order-info">
+          <div class="order-id">הזמנה #{{ order.id }}</div>
+          <div class="order-customer">{{ order.fullName }}</div>
+        </div>
+        <div class="order-status">
+          <span [ngClass]="getStatusBadgeClass(order.status)" class="status-badge">
+            {{ order.status }}
+          </span>
+        </div>
+      </div>
+
+      <div class="order-details">
+        <div class="detail-row">
+          <span class="label">דוא״ל:</span>
+          <span class="value">{{ order.email }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">טלפון:</span>
+          <span class="value">{{ order.phone }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">כתובת:</span>
+          <span class="value">{{ order.street }} {{ order.houseNumber }}, {{ order.city }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">סכום:</span>
+          <span class="value price">₪{{ order.totalAmount || 0 }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">תאריך:</span>
+          <span class="value">{{ order.date | date: 'short' }}</span>
+        </div>
+      </div>
+
+      <div class="order-items-section" *ngIf="order.items && order.items.length > 0">
+        <h4>פריטים בהזמנה</h4>
+        <ul class="items-list">
+          <li *ngFor="let item of order.items">
+            {{ item.bookName }} - ₪{{ item.price }} x {{ item.quantity }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="order-actions">
+        <button class="btn-delete" (click)="deleteOrder(order.id!)" title="מחיקה">
+          מחק הזמנה
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

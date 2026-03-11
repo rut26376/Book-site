@@ -1,0 +1,301 @@
+.orders-management {
+  padding: 0;
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.orders-management h2 {
+  color: #4a3728;
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* סינון */
+.filters-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #4a3728;
+  font-size: 14px;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #4a3728;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(74, 55, 40, 0.1);
+}
+
+.btn-clear {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-clear:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+/* רשימת הזמנות */
+.orders-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-results {
+  background: white;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* כרטיס הזמנה */
+.order-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-right: 4px solid #4a3728;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #4a3728;
+  font-size: 16px;
+}
+
+.order-customer {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.status-חדש {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-בטיפול {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-הושלם {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.status-בוטל {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* פרטי הזמנה */
+.order-details {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  font-weight: 600;
+  color: #4a3728;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.detail-row .value {
+  color: #333;
+  font-size: 14px;
+  text-align: left;
+  margin-right: 15px;
+}
+
+.detail-row .price {
+  font-weight: 600;
+  color: #4a3728;
+  font-size: 15px;
+}
+
+/* פרטי פריטים */
+.order-items-section {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.order-items-section h4 {
+  margin: 0 0 12px 0;
+  color: #4a3728;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.items-list {
+  margin: 0;
+  padding-right: 20px;
+  list-style-position: inside;
+}
+
+.items-list li {
+  color: #666;
+  font-size: 13px;
+  padding: 6px 0;
+}
+
+/* פעולות */
+.order-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-delete {
+  padding: 10px 20px;
+  background-color: #ffebee;
+  border: 1px solid #d32f2f;
+  color: #d32f2f;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #ffcdd2;
+  border-color: #b71c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orders-management h2 {
+    font-size: 20px;
+  }
+
+  .filters-section {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .order-header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: right;
+  }
+
+  .order-info {
+    width: 100%;
+  }
+
+  .order-status {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 6px;
+    text-align: right;
+  }
+
+  .detail-row .value {
+    text-align: right;
+    margin-right: 0;
+  }
+}
