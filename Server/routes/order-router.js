@@ -8,4 +8,5 @@ const router = express.Router()
 
 router.post("/newOrder", orderCtrl.createOrder)
 router.get("/allOrders", adminMiddleware, orderCtrl.getAllOrders)
+router.put("/updateStatus", adminMiddleware, orderCtrl.updateOrderStatus)
 module.exports = router

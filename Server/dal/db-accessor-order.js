@@ -29,6 +29,19 @@ class dbaccessorOrders {
             throw error
         }
     }
+
+    updateOrderStatus = async (orderId, newStatus) => {
+        try {
+            let updatedOrder = await orders.findOneAndUpdate(
+                { id: orderId },
+                { status: newStatus },
+                { new: true }
+            )
+            return updatedOrder;
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = dbaccessorOrders;

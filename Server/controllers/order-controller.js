@@ -68,6 +68,42 @@ getAllOrders = async(req, res)=>{
         res.status(500).json({ error: "Failed to get orders" });
     }
 }
+
+updateOrderStatus = async(req, res)=>{
+    try {
+        const { orderId, status } = req.body;
+        
+        // Validate status value
+        const validStatuses = ["חדש", "בטיפול", "הושלם"];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "סטטוס לא תקין" 
+            });
+        }
+        
+        let updatedOrder = await dbOrders.updateOrderStatus(orderId, status);
+        
+        if (!updatedOrder) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "הזמנה לא נמצאה" 
+            });
+        }
+        
+        res.status(200).json({
+            success: true,
+            message: "סטטוס הזמנה עודכן בהצלחה",
+            order: updatedOrder
+        })
+    } catch (error) {
+        console.error("Error in updateOrderStatus:", error.message);
+        res.status(500).json({ 
+            success: false, 
+            message: "שגיאה בעדכון הסטטוס" 
+        });
+    }
+}
 }
 module.exports = orderController;
 
