@@ -1,6 +1,11 @@
 <div class="books-management">
   <h2>ניהול ספרים</h2>
 
+  <!-- כפתור הוספת ספר -->
+  <button class="btn-add-book" (click)="openAddBookModal()">
+    ➕ הוסף ספר חדש
+  </button>
+
   <!-- סינון -->
   <div class="filters-section">
     <div class="filter-group">
@@ -179,6 +184,19 @@
       <div class="edit-modal-footer">
         <button class="btn-cancel" (click)="cancelEdit()">ביטול</button>
         <button class="btn-save" (click)="saveEdit()">שמור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- מודל הוספת ספר -->
+  <div *ngIf="showAddBookModal" class="add-book-modal-overlay" (click)="closeAddBookModal()">
+    <div class="add-book-modal-content" (click)="$event.stopPropagation()">
+      <div class="add-book-modal-header">
+        <h3>➕ הוסף ספר חדש</h3>
+        <button class="btn-close" (click)="closeAddBookModal()">✕</button>
+      </div>
+      <div class="add-book-modal-body">
+        <app-add-book></app-add-book>
       </div>
     </div>
   </div>

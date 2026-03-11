@@ -3,18 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BooksService } from '../../../services/books.service';
 import { UploadService } from '../../../services/upload.service';
+import { AddBookComponent } from '../add-book/add-book.component';
 import categoriesData from '../../../data/categories.json';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddBookComponent],
   templateUrl: './books.component.html',
   styleUrl: './books.component.css'
 })
 export class BooksComponent implements OnInit {
   private booksService = inject(BooksService);
   private uploadService = inject(UploadService);
+  uploadService_public = inject(UploadService); // לתצוגה ב-HTML
 
   books: any[] = [];
   allBooks: any[] = [];
@@ -36,6 +38,9 @@ export class BooksComponent implements OnInit {
   editingBook: any = null;
   selectedImageFile: File | null = null;
   newImagePreview: string | null = null;
+
+  // הוספת ספר חדש
+  showAddBookModal: boolean = false;
 
   ngOnInit() {
     this.loadBooks();
@@ -262,5 +267,20 @@ export class BooksComponent implements OnInit {
       }
     });
     return Array.from(categories).sort();
+  }
+
+  /**
+   * פתח מודל הוספת ספר
+   */
+  openAddBookModal() {
+    this.showAddBookModal = true;
+  }
+
+  /**
+   * סגור מודל הוספת ספר
+   */
+  closeAddBookModal() {
+    this.showAddBookModal = false;
+    this.loadBooks(); // רענן את רשימת הספרים
   }
 }

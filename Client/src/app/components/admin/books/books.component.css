@@ -1,19 +1,43 @@
 .books-management {
-  padding: 20px;
+  padding: 0;
   direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .books-management h2 {
-  color: #333;
-  margin-bottom: 25px;
+  color: #4a3728;
+  margin: 0 0 25px 0;
   font-size: 24px;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+/* כפתור הוספת ספר */
+.btn-add-book {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #4a3728 0%, #5d4837 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(74, 55, 40, 0.2);
+}
+
+.btn-add-book:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 55, 40, 0.3);
+}
+
+.btn-add-book:active {
+  transform: translateY(0);
 }
 
 /* סינון */
 .filters-section {
-  background: #f9f9f9;
+  background: white;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 25px;
@@ -21,19 +45,20 @@
   flex-wrap: wrap;
   gap: 15px;
   align-items: flex-end;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
   flex: 1;
   min-width: 200px;
 }
 
 .filter-group label {
   font-weight: 600;
-  color: #333;
+  color: #4a3728;
   font-size: 14px;
 }
 
@@ -41,94 +66,98 @@
 .filter-group select {
   padding: 10px 12px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 14px;
-  font-family: 'Arial', sans-serif;
+  font-family: inherit;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
 }
 
 .filter-group input:focus,
 .filter-group select:focus {
   outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+  border-color: #4a3728;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(74, 55, 40, 0.1);
 }
 
 .btn-clear {
   padding: 10px 20px;
-  background: #ff9800;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  color: #666;
   font-weight: 600;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-clear:hover {
-  background: #e68900;
+  background-color: #e0e0e0;
+  border-color: #999;
 }
 
-/* טבלה */
+/* טבלת הספרים */
 .books-table-wrapper {
-  overflow-x: auto;
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
 }
 
 .books-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
 }
 
 .books-table thead {
-  background: #2c3e50;
-  color: white;
-  font-weight: 600;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #e0e0e0;
 }
 
 .books-table th {
   padding: 15px;
   text-align: right;
-  border-bottom: 2px solid #34495e;
+  font-weight: 600;
+  color: #4a3728;
   font-size: 14px;
 }
 
-.books-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ecf0f1;
-}
-
 .books-table tbody tr {
-  transition: background 0.2s;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
 }
 
 .books-table tbody tr:hover {
-  background: #f5f5f5;
+  background-color: #f9f9f9;
 }
 
-.books-table tbody tr:nth-child(even) {
-  background: #fafafa;
+.books-table td {
+  padding: 15px;
+  color: #333;
+  font-size: 14px;
 }
 
-.price {
+.books-table .price {
   font-weight: 600;
-  color: #27ae60;
+  color: #4a3728;
 }
 
-.categories {
+.books-table .categories {
   display: flex;
-  gap: 5px;
   flex-wrap: wrap;
+  gap: 6px;
 }
 
 .category-badge {
-  background: #3498db;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 3px;
+  background-color: #f0ebe3;
+  color: #4a3728;
+  padding: 4px 10px;
+  border-radius: 4px;
   font-size: 12px;
-  white-space: nowrap;
+  font-weight: 500;
 }
 
 .image-cell {
@@ -136,18 +165,20 @@
 }
 
 .btn-view-image {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 6px 12px;
+  background-color: #f0ebe3;
+  border: 1px solid #ddd;
+  color: #4a3728;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 13px;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-view-image:hover {
-  background: #2980b9;
+  background-color: #e0dcd0;
+  border-color: #4a3728;
 }
 
 .no-image {
@@ -163,43 +194,44 @@
 
 .btn-edit,
 .btn-delete {
-  background: none;
+  padding: 6px 10px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 18px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: all 0.3s;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-edit {
-  color: #3498db;
-  background: rgba(52, 152, 219, 0.1);
+  background-color: #f0ebe3;
+  color: #4a3728;
+  border: 1px solid #ddd;
 }
 
 .btn-edit:hover {
-  background: rgba(52, 152, 219, 0.2);
-  transform: scale(1.1);
+  background-color: #e0dcd0;
+  border-color: #4a3728;
 }
 
 .btn-delete {
-  color: #e74c3c;
-  background: rgba(231, 76, 60, 0.1);
+  background-color: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
 }
 
 .btn-delete:hover {
-  background: rgba(231, 76, 60, 0.2);
-  transform: scale(1.1);
+  background-color: #ffcdd2;
 }
 
 .no-results {
   text-align: center;
   color: #999;
-  padding: 30px !important;
+  padding: 40px;
   font-size: 16px;
 }
 
-/* מודל תמונה */
+/* מודל להצגת תמונה */
 .image-modal-overlay {
   position: fixed;
   top: 0;
@@ -208,10 +240,10 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.3s;
+  animation: fadeIn 0.3s ease-out;
 }
 
 @keyframes fadeIn {
@@ -228,15 +260,14 @@
   border-radius: 10px;
   max-width: 600px;
   width: 90%;
-  max-height: 80vh;
-  overflow: auto;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(30px);
+    transform: translateY(50px);
     opacity: 0;
   }
   to {
@@ -250,34 +281,32 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid #e0e0e0;
   direction: rtl;
 }
 
 .image-modal-header h3 {
   margin: 0;
-  color: #333;
-  flex: 1;
+  color: #4a3728;
+  font-size: 18px;
 }
 
-.btn-close {
+.image-modal-header .btn-close {
   background: none;
   border: none;
   font-size: 24px;
-  cursor: pointer;
   color: #999;
+  cursor: pointer;
   padding: 0;
   width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  transition: all 0.3s;
+  transition: color 0.3s ease;
 }
 
-.btn-close:hover {
-  background: #f0f0f0;
+.image-modal-header .btn-close:hover {
   color: #333;
 }
 
@@ -288,260 +317,258 @@
 
 .image-modal-body img {
   max-width: 100%;
-  max-height: 60vh;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-height: 500px;
+  border-radius: 6px;
 }
 
-.image-modal-body p {
-  color: #999;
-  margin: 0;
-}
-
-/* מודל עריכה */
+/* מודל לעריכת ספר */
 .edit-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  direction: rtl;
+  overflow-y: auto;
 }
 
 .edit-modal-content {
   background: white;
   border-radius: 10px;
-  max-width: 500px;
+  max-width: 700px;
   width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  margin: 20px auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
 }
 
 .edit-modal-header {
-  padding: 20px;
-  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  direction: rtl;
 }
 
 .edit-modal-header h3 {
   margin: 0;
-  color: #333;
-  font-size: 20px;
+  color: #4a3728;
+  font-size: 18px;
 }
 
-.btn-close {
+.edit-modal-header .btn-close {
   background: none;
   border: none;
   font-size: 24px;
-  cursor: pointer;
   color: #999;
+  cursor: pointer;
   padding: 0;
   width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.3s ease;
 }
 
-.btn-close:hover {
+.edit-modal-header .btn-close:hover {
   color: #333;
 }
 
 .edit-modal-body {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  direction: rtl;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
-.form-group {
+.edit-modal-body .form-group {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 
-.form-group label {
+.edit-modal-body label {
   font-weight: 600;
-  color: #333;
+  color: #4a3728;
   font-size: 14px;
 }
 
-.form-group input,
-.form-group textarea {
+.edit-modal-body input,
+.edit-modal-body textarea {
   padding: 10px 12px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 14px;
-  font-family: 'Arial', sans-serif;
-  direction: rtl;
+  font-family: inherit;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.edit-modal-body input:focus,
+.edit-modal-body textarea:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-}
-
-.edit-preview-img {
-  max-width: 100%;
-  max-height: 200px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-.edit-modal-footer {
-  padding: 15px 20px;
-  border-top: 1px solid #eee;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.btn-cancel {
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  background: #f5f5f5;
-  color: #333;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.btn-cancel:hover {
-  background: #e5e5e5;
-}
-
-.btn-save {
-  padding: 10px 20px;
-  border: none;
-  background: #28a745;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.btn-save:hover {
-  background: #218838;
-}
-
-/* סעיף התמונה */
-.image-section {
-  padding: 10px 0;
+  border-color: #4a3728;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(74, 55, 40, 0.1);
 }
 
 .image-dropdown {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #fafafa;
-  overflow: hidden;
+  position: relative;
 }
 
 .btn-toggle-image {
   width: 100%;
-  padding: 12px 15px;
-  border: none;
-  background: #e3f2fd;
-  color: #1976d2;
+  padding: 10px 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #4a3728;
   cursor: pointer;
   font-weight: 600;
-  text-align: right;
   font-size: 14px;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  text-align: right;
 }
 
 .btn-toggle-image:hover {
-  background: #bbdefb;
+  background-color: #f0ebe3;
+  border-color: #4a3728;
 }
 
 .image-options {
+  margin-top: 10px;
   padding: 15px;
-  border-top: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
 
-.current-image,
-.new-image-preview {
-  padding: 10px;
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  text-align: center;
+.current-image {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .label-small {
+  margin: 0 0 8px 0;
   font-weight: 600;
-  color: #666;
-  font-size: 12px;
-  margin: 0 0 5px 0;
-  text-transform: uppercase;
+  color: #4a3728;
+  font-size: 13px;
 }
 
 .filename {
-  color: #333;
+  margin: 0 0 10px 0;
+  color: #666;
   font-size: 13px;
-  margin: 5px 0 10px 0;
   word-break: break-all;
 }
 
-.file-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.edit-preview-img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
 }
 
-.file-input {
+.file-input-wrapper {
+  margin-bottom: 15px;
+}
+.file-input
+{
   display: none;
 }
 
 .btn-upload {
   width: 100%;
-  padding: 10px 15px;
-  border: 2px dashed #2196f3;
-  background: white;
-  color: #2196f3;
+  padding: 10px 12px;
+  background-color: white;
+  border: 2px dashed #4a3728;
+  border-radius: 6px;
+  color: #4a3728;
   cursor: pointer;
   font-weight: 600;
-  border-radius: 5px;
-  transition: all 0.3s;
   font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .btn-upload:hover {
-  background: #e3f2fd;
-  border-color: #1976d2;
+  background-color: #f0ebe3;
+}
+
+.new-image-preview {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
 }
 
 .btn-remove-image {
   width: 100%;
+  margin-top: 10px;
   padding: 8px 12px;
-  background: #ffebee;
+  background-color: #ffebee;
+  border: 1px solid #d32f2f;
   color: #d32f2f;
-  border: 1px solid #ffcdd2;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  margin-top: 10px;
-  font-size: 13px;
-  transition: all 0.3s;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .btn-remove-image:hover {
-  background: #ffcdd2;
+  background-color: #ffcdd2;
+}
+
+.edit-modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+  direction: rtl;
+  background-color: #f9f9f9;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+.btn-save {
+  flex: 1;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #4a3728 0%, #5d4837 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 55, 40, 0.2);
 }
 
 /* responsive */
@@ -567,5 +594,163 @@
   .category-badge {
     font-size: 11px;
     padding: 3px 6px;
+  }
+}
+
+/* מודל הוספת ספר */
+.add-book-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.add-book-modal-content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.add-book-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  direction: rtl;
+}
+
+.add-book-modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.add-book-modal-header .btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-book-modal-header .btn-close:hover {
+  color: #333;
+}
+
+.add-book-modal-body {
+  padding: 20px;
+  direction: rtl;
+}
+
+.add-book-modal-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  direction: rtl;
+}
+
+.add-book-modal-footer .btn-cancel {
+  flex: 1;
+  padding: 10px 20px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-book-modal-footer .btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.add-book-modal-footer .btn-add {
+  flex: 1;
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-book-modal-footer .btn-add:hover {
+  background: linear-gradient(135deg, #5d4837 0%, #6b5543 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 55, 40, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .books-management h2 {
+    font-size: 20px;
+  }
+
+  .btn-add-book {
+    width: 100%;
+  }
+
+  .filters-section {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .books-table {
+    font-size: 12px;
+  }
+
+  .books-table th,
+  .books-table td {
+    padding: 10px 8px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    width: 100%;
+  }
+
+  .edit-modal-content,
+  .add-book-modal-content {
+    width: 95%;
+    margin: 10px auto;
   }
 }
