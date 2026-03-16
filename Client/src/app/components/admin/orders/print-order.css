@@ -1,0 +1,128 @@
+/* Print Styles for Order Details */
+.print-modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.print-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #4a3728 0%, #6b5344 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.print-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.print-section {
+  margin-bottom: 25px;
+}
+
+.print-section h4 {
+  color: #4a3728;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.print-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.print-info-row .label {
+  font-weight: 600;
+  color: #4a3728;
+  flex-shrink: 0;
+  margin-left: 15px;
+}
+
+.print-info-row .value {
+  color: #333;
+  text-align: left;
+  flex: 1;
+}
+
+.print-info-row.total {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  border-bottom: none;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.print-info-row.total .label {
+  color: #4a3728;
+}
+
+.print-info-row.total .value {
+  color: #4a3728;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.print-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.print-items-table thead {
+  background-color: #f0f0f0;
+}
+
+.print-items-table thead th {
+  padding: 10px;
+  font-weight: 600;
+  color: #4a3728;
+  text-align: right;
+  border-bottom: 1px solid #ddd;
+}
+
+.print-items-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: right;
+}
+
+.print-items-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.print-items-table td:nth-child(2),
+.print-items-table td:nth-child(3),
+.print-items-table td:nth-child(4) {
+  text-align: center;
+}
+
+@media print {
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  .print-modal-content {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .print-modal-header {
+    border-radius: 0;
+  }
+}

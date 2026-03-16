@@ -1,8 +1,4 @@
-.orders-management {
-  padding: 0;
-  direction: rtl;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+.orders-management{padding:0;direction:rtl}
 
 .orders-management h2 {
   color: #4a3728;
